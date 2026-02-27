@@ -4,152 +4,169 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Ejecutivo — Dirección General</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#0b0e14; --surface:#111520; --surface2:#161b27; --border:rgba(255,255,255,0.06);
-    --obra:#e8a045; --obra-g:rgba(232,160,69,0.1); --prov:#4ab8a0; --prov-g:rgba(74,184,160,0.1);
-    --txt:#f0ece4; --txt2:#7a8299; --txt3:#3d4356;
-    --red:#e05c5c; --green:#4ab87e; --yellow:#e8c845; --purple:#8b7ae8;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
-  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.013) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+:root{
+  --bg:#0b0e14;--surf:#111520;--surf2:#161b27;--brd:rgba(255,255,255,0.06);
+  --obra:#e8a045;--obra-g:rgba(232,160,69,0.1);
+  --prov:#4ab8a0;--prov-g:rgba(74,184,160,0.1);
+  --txt:#f0ece4;--txt2:#7a8299;--txt3:#3d4356;
+  --red:#e05c5c;--green:#4ab87e;--yellow:#e8c845;--purple:#8b7ae8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.013) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
 
-  /* HEADER */
-  header{position:sticky;top:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(11,14,20,0.93);backdrop-filter:blur(20px);}
-  .logo{display:flex;align-items:center;gap:14px;}
-  .logo-sq{width:32px;height:32px;border:1px solid rgba(255,255,255,0.12);position:relative;}
-  .logo-sq::before{content:'';position:absolute;inset:5px;background:linear-gradient(135deg,var(--obra),var(--prov));opacity:.8;}
-  .h-title{font-size:16px;font-weight:600;}
-  .h-sub{font-size:14px;color:var(--txt2);letter-spacing:.15em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
-  .h-right{display:flex;align-items:center;gap:18px;}
-  .h-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--txt2);letter-spacing:.08em;}
-  .h-badge{padding:5px 14px;border:1px solid var(--border);font-size:11px;color:var(--txt2);letter-spacing:.06em;}
+/* HEADER */
+header{position:sticky;top:0;z-index:200;padding:16px 36px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd);background:rgba(11,14,20,0.95);backdrop-filter:blur(20px);}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-sq{width:30px;height:30px;border:1px solid rgba(255,255,255,0.12);position:relative;}
+.logo-sq::before{content:'';position:absolute;inset:5px;background:linear-gradient(135deg,var(--obra),var(--prov));opacity:.8;}
+.h-title{font-size:14px;font-weight:600;}
+.h-sub{font-size:9px;color:var(--txt2);letter-spacing:.15em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
+.h-right{display:flex;align-items:center;gap:16px;}
+.h-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--txt2);}
+.h-badge{padding:4px 12px;border:1px solid var(--brd);font-size:10px;color:var(--txt2);}
 
-  /* KPIs */
-  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:28px 40px 0;position:relative;z-index:5;animation:fu .5s ease both;}
-  .kpi{background:var(--surface);padding:20px 22px;position:relative;overflow:hidden;transition:background .2s;cursor:default;}
-  .kpi:hover{background:var(--surface2);}
-  .kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-  .kpi.ko::after{background:var(--obra);}
-  .kpi.kp::after{background:var(--prov);}
-  .kpi.kt::after{background:linear-gradient(90deg,var(--obra),var(--prov));}
-  .kpi-lbl{font-size:16px;letter-spacing:.18em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;margin-bottom:10px;}
-  .kpi-val{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1;}
-  .ko .kpi-val{color:var(--obra);} .kp .kpi-val{color:var(--prov);} .kt .kpi-val{color:var(--txt);}
-  .kpi-sub{font-size:14px;color:var(--txt2);margin-top:5px;}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--brd);border:1px solid var(--brd);margin:24px 36px 0;position:relative;z-index:5;animation:fu .4s ease both;}
+.kpi{background:var(--surf);padding:18px 20px;position:relative;overflow:hidden;transition:background .2s;}
+.kpi:hover{background:var(--surf2);}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.kpi.ko::after{background:var(--obra);}.kpi.kp::after{background:var(--prov);}.kpi.kt::after{background:linear-gradient(90deg,var(--obra),var(--prov));}
+.kpi-lbl{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;margin-bottom:8px;}
+.kpi-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;line-height:1;}
+.ko .kpi-val{color:var(--obra);}.kp .kpi-val{color:var(--prov);}.kt .kpi-val{color:var(--txt);}
+.kpi-sub{font-size:10px;color:var(--txt2);margin-top:4px;}
 
-  /* MAIN GRID */
-  .main{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px 40px 0;position:relative;z-index:5;}
+/* TABS */
+.tabs{display:flex;gap:0;margin:24px 36px 0;border-bottom:1px solid var(--brd);position:relative;z-index:5;}
+.tab{padding:10px 24px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid transparent;border-bottom:none;color:var(--txt2);transition:all .2s;letter-spacing:.04em;margin-bottom:-1px;}
+.tab:hover{color:var(--txt);}
+.tab.active-obra{color:var(--obra);border-color:var(--brd);border-bottom-color:var(--bg);background:var(--surf);}
+.tab.active-prov{color:var(--prov);border-color:var(--brd);border-bottom-color:var(--bg);background:var(--surf);}
+.tab.active-map{color:var(--txt);border-color:var(--brd);border-bottom-color:var(--bg);background:var(--surf);}
 
-  /* PANEL */
-  .panel{border:1px solid var(--border);background:var(--surface);overflow:hidden;animation:fu .5s ease both;}
-  .panel:nth-child(1){animation-delay:.1s;}.panel:nth-child(2){animation-delay:.2s;}
-  .p-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;}
-  .p-head::before{content:'';position:absolute;inset:0;opacity:.05;}
-  .po .p-head::before{background:var(--obra);} .pp .p-head::before{background:var(--prov);}
-  .p-head-l{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
-  .p-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;border:1px solid;}
-  .po .p-icon{border-color:rgba(232,160,69,.35);color:var(--obra);background:var(--obra-g);}
-  .pp .p-icon{border-color:rgba(74,184,160,.35);color:var(--prov);background:var(--prov-g);}
-  .p-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;}
-  .p-sub{font-family:'DM Mono',monospace;font-size:14px;color:var(--txt2);margin-top:2px;}
+/* CONTENT */
+.content{position:relative;z-index:5;padding:0 36px 50px;}
+.section{display:none;animation:fu .3s ease both;}
+.section.active{display:block;}
 
-  /* TOOLBAR */
-  .toolbar{padding:9px 22px;border-bottom:1px solid var(--border);display:flex;gap:7px;align-items:center;}
-  .srch{flex:1;background:var(--surface2);border:1px solid var(--border);padding:5px 11px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--txt);outline:none;}
-  .srch::placeholder{color:var(--txt3);}
-  .srch:focus{border-color:rgba(255,255,255,.14);}
-  .ftag{padding:3px 9px;font-size:14px;letter-spacing:.05em;border:1px solid var(--border);cursor:pointer;transition:all .15s;color:var(--txt2);font-family:'DM Mono',monospace;white-space:nowrap;background:transparent;}
-  .ftag:hover{color:var(--txt);border-color:rgba(255,255,255,.16);}
-  .ftag.ao{border-color:var(--obra);color:var(--obra);background:var(--obra-g);}
-  .ftag.ap{border-color:var(--prov);color:var(--prov);background:var(--prov-g);}
+/* MAP SECTION */
+.map-wrap{display:grid;grid-template-columns:1fr 340px;gap:20px;padding-top:20px;}
+.map-container{border:1px solid var(--brd);background:var(--surf);padding:20px;position:relative;}
+.map-title{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.map-legend{display:flex;gap:16px;font-size:10px;font-family:'DM Mono',monospace;color:var(--txt2);}
+.map-leg-item{display:flex;align-items:center;gap:6px;}
+.map-leg-dot{width:8px;height:8px;border-radius:50%;}
+svg#mex-map{width:100%;height:auto;display:block;}
+.state-path{fill:#1a2030;stroke:#0b0e14;stroke-width:1;cursor:pointer;transition:all .25s;}
+.state-path:hover{opacity:.8;stroke-width:1.5;}
+.state-path.has-obra{fill:#7a4a15;}
+.state-path.has-prov{fill:#1a4a42;}
+.state-path.has-both{fill:#4a3a15;}
+.state-path.active-s{stroke:#fff;stroke-width:2;filter:brightness(1.4);}
+.state-tooltip{position:absolute;background:var(--surf2);border:1px solid var(--brd);padding:10px 14px;font-size:11px;pointer-events:none;display:none;z-index:100;min-width:160px;}
+.state-tooltip.show{display:block;}
 
-  /* TABLE */
-  .t-head{display:grid;padding:7px 22px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.25);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);font-family:'DM Mono',monospace;}
-  .po .t-head,.po .p-row{grid-template-columns:58px 1fr 88px 88px 55px;}
-  .pp .t-head,.pp .p-row{grid-template-columns:58px 1fr 88px 88px 55px;}
-  .p-list{max-height:320px;overflow-y:auto;}
-  .p-list::-webkit-scrollbar{width:3px;} .p-list::-webkit-scrollbar-thumb{background:var(--border);}
-  .p-row{display:grid;padding:11px 22px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;position:relative;overflow:hidden;align-items:center;}
-  .p-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;transition:width .2s;}
-  .po .p-row::before{background:var(--obra);} .pp .p-row::before{background:var(--prov);}
-  .p-row:hover::before{width:3px;} .p-row:hover{background:var(--surface2);}
-  .p-row:last-child{border:none;}
-  .c-id{font-family:'DM Mono',monospace;font-size:14px;color:var(--txt3);letter-spacing:.07em;}
-  .c-name{font-size:12px;font-weight:500;line-height:1.3;padding-right:6px;}
-  .c-name .s{font-size:14px;color:var(--txt2);margin-top:2px;font-weight:400;}
-  .c-amt{font-family:'DM Mono',monospace;font-size:11px;text-align:right;}
-  .po .c-amt{color:var(--obra);} .pp .c-amt{color:var(--prov);}
-  .c-av{text-align:right;}
-  .av-n{font-family:'DM Mono',monospace;font-size:11px;margin-bottom:3px;}
-  .pb{width:100%;height:3px;background:var(--border);overflow:hidden;}
-  .pf{height:100%;transition:width .9s ease;}
-  .po .pf{background:var(--obra);} .pp .pf{background:var(--prov);}
-  .pf.over{background:var(--red);}
-  .c-st{font-size:14px;color:var(--txt2);font-family:'DM Mono',monospace;}
+/* MAP SIDE PANEL */
+.map-side{display:flex;flex-direction:column;gap:12px;padding-top:20px;}
+.map-state-card{border:1px solid var(--brd);background:var(--surf);overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.map-state-card:hover{border-color:rgba(255,255,255,.15);}
+.map-state-card.sel{border-color:var(--obra);}
+.msc-head{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd);}
+.msc-name{font-size:13px;font-weight:600;}
+.msc-badges{display:flex;gap:6px;}
+.msc-badge{padding:2px 8px;font-size:9px;font-family:'DM Mono',monospace;border:1px solid;}
+.msc-badge.o{border-color:rgba(232,160,69,.4);color:var(--obra);background:var(--obra-g);}
+.msc-badge.p{border-color:rgba(74,184,160,.4);color:var(--prov);background:var(--prov-g);}
+.msc-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--brd);}
+.msc-stat{background:var(--surf2);padding:8px 12px;}
+.msc-stat-lbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);font-family:'DM Mono',monospace;margin-bottom:3px;}
+.msc-stat-val{font-size:12px;font-weight:600;font-family:'DM Mono',monospace;}
+.msc-stat-val.o{color:var(--obra);}.msc-stat-val.p{color:var(--prov);}
 
-  .p-foot{padding:11px 22px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.2);}
-  .f-stat{font-size:11px;color:var(--txt2);font-family:'DM Mono',monospace;}
-  .f-stat span{font-size:12px;font-weight:600;}
-  .po .f-stat span{color:var(--obra);} .pp .f-stat span{color:var(--prov);}
-  .f-cnt{font-size:14px;color:var(--txt3);font-family:'DM Mono',monospace;}
+/* GROUPED SECTION */
+.group-header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;}
+.group-filter{display:flex;align-items:center;gap:8px;}
+.state-sel{background:var(--surf2);border:1px solid var(--brd);color:var(--txt);padding:6px 12px;font-size:11px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;}
+.state-sel:focus{border-color:rgba(255,255,255,.15);}
+.srch{background:var(--surf2);border:1px solid var(--brd);padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--txt);outline:none;width:220px;}
+.srch::placeholder{color:var(--txt3);}
 
-  /* MODAL */
-  .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);z-index:999;align-items:center;justify-content:center;padding:40px;}
-  .modal-ov.open{display:flex;}
-  .modal{background:var(--surface);border:1px solid rgba(255,255,255,.1);max-width:620px;width:100%;max-height:80vh;overflow-y:auto;animation:fu .22s ease both;}
-  .m-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;}
-  .m-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;line-height:1.3;}
-  .m-clave{font-family:'DM Mono',monospace;font-size:14px;color:var(--txt2);margin-top:3px;}
-  .m-close{background:none;border:none;color:var(--txt2);font-size:17px;cursor:pointer;padding:0 4px;}
-  .m-close:hover{color:var(--txt);}
-  .m-body{padding:18px 22px;}
-  .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
-  .d-item label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;display:block;margin-bottom:3px;}
-  .d-item value{font-size:13px;color:var(--txt);font-weight:500;display:block;}
-  .d-sec{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:12px;}
-  .b-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
-  .b-row:last-child{border:none;}
-  .bl{color:var(--txt2);} .bv{font-family:'DM Mono',monospace;font-weight:500;}
-  .neg{color:var(--red);} .pos{color:var(--green);}
+/* STATE GROUP */
+.state-group{border:1px solid var(--brd);margin-bottom:12px;overflow:hidden;animation:fu .3s ease both;}
+.sg-head{padding:13px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .15s;background:var(--surf);}
+.sg-head:hover{background:var(--surf2);}
+.sg-head-l{display:flex;align-items:center;gap:12px;}
+.sg-chevron{font-size:10px;color:var(--txt2);transition:transform .25s;display:inline-block;}
+.sg-chevron.open{transform:rotate(90deg);}
+.sg-estado{font-size:14px;font-weight:600;letter-spacing:.03em;}
+.sg-badges{display:flex;gap:6px;}
+.sg-badge{padding:2px 8px;font-size:9px;font-family:'DM Mono',monospace;border:1px solid;}
+.sg-badge.o{border-color:rgba(232,160,69,.35);color:var(--obra);background:var(--obra-g);}
+.sg-badge.p{border-color:rgba(74,184,160,.35);color:var(--prov);background:var(--prov-g);}
+.sg-stats{display:flex;gap:20px;}
+.sg-stat{text-align:right;}
+.sg-stat-lbl{font-size:9px;color:var(--txt3);font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;}
+.sg-stat-val{font-size:12px;font-weight:600;font-family:'DM Mono',monospace;}
+.sg-stat-val.o{color:var(--obra);}.sg-stat-val.p{color:var(--prov);}
 
-  /* BOTTOM */
-  .bottom{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 40px 50px;position:relative;z-index:5;}
-  .b-panel{border:1px solid var(--border);background:var(--surface);overflow:hidden;animation:fu .5s ease both;}
-  .b-panel:nth-child(1){animation-delay:.3s;}.b-panel:nth-child(2){animation-delay:.4s;}
-  .b-ph{padding:14px 20px;border-bottom:1px solid var(--border);font-family:'Playfair Display',serif;font-size:15px;}
+/* MUNICIPIO GROUP */
+.sg-body{display:none;}
+.sg-body.open{display:block;}
+.mun-group{border-top:1px solid var(--brd);}
+.mg-head{padding:10px 20px 10px 36px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:rgba(0,0,0,.15);transition:background .15s;}
+.mg-head:hover{background:rgba(0,0,0,.25);}
+.mg-chevron{font-size:9px;color:var(--txt3);transition:transform .2s;display:inline-block;}
+.mg-chevron.open{transform:rotate(90deg);}
+.mg-name{font-size:12px;font-weight:500;color:var(--txt2);margin-left:8px;}
+.mg-count{font-size:10px;color:var(--txt3);font-family:'DM Mono',monospace;}
+.mg-body{display:none;}
+.mg-body.open{display:block;}
 
-  /* State chart */
-  .s-row{display:flex;align-items:center;gap:10px;padding:9px 20px;border-bottom:1px solid var(--border);}
-  .s-row:last-child{border:none;}
-  .s-name{min-width:120px;font-size:11px;font-weight:500;}
-  .s-bars{flex:1;display:flex;flex-direction:column;gap:3px;}
-  .s-bw{height:4px;background:var(--border);}
-  .s-bf-o{background:var(--obra);height:100%;}
-  .s-bf-p{background:var(--prov);height:100%;}
-  .s-cnt{font-family:'DM Mono',monospace;font-size:14px;color:var(--txt2);white-space:nowrap;}
-  .s-leg{display:flex;gap:14px;padding:10px 20px;border-top:1px solid var(--border);}
-  .s-li{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--txt2);font-family:'DM Mono',monospace;}
-  .s-dot{width:8px;height:8px;}
+/* PROJECT ROW */
+.p-row{display:grid;grid-template-columns:56px 1fr 100px 96px 60px;padding:10px 20px 10px 52px;border-top:1px solid var(--brd);cursor:pointer;transition:background .12s;position:relative;align-items:center;}
+.p-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;transition:width .2s;}
+.p-row.ro::before{background:var(--obra);}.p-row.rp::before{background:var(--prov);}
+.p-row:hover::before{width:3px;}.p-row:hover{background:var(--surf2);}
+.c-id{font-family:'DM Mono',monospace;font-size:10px;color:var(--txt3);}
+.c-name{font-size:12px;font-weight:500;line-height:1.3;padding-right:8px;}
+.c-name .s{font-size:10px;color:var(--txt2);margin-top:2px;font-weight:400;}
+.c-amt{font-family:'DM Mono',monospace;font-size:11px;text-align:right;}
+.ro .c-amt{color:var(--obra);}.rp .c-amt{color:var(--prov);}
+.c-av{text-align:right;}
+.av-n{font-family:'DM Mono',monospace;font-size:11px;margin-bottom:3px;}
+.pb{width:100%;height:3px;background:var(--brd);overflow:hidden;}
+.pf{height:100%;}
+.ro .pf{background:var(--obra);}.rp .pf{background:var(--prov);}
+.pf.over{background:var(--red);}
+.c-tp{font-size:9px;color:var(--txt2);font-family:'DM Mono',monospace;letter-spacing:.04em;}
 
-  /* Avance dist */
-  .av-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
-  .av-cell{background:var(--surface);padding:14px 16px;}
-  .av-ct{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;margin-bottom:8px;}
-  .av-segs{display:flex;height:8px;gap:1px;margin-bottom:10px;overflow:hidden;}
-  .seg{height:100%;}
-  .av-leg{display:flex;flex-wrap:wrap;gap:6px;}
-  .al{display:flex;align-items:center;gap:4px;font-size:14px;color:var(--txt2);font-family:'DM Mono',monospace;}
-  .ad{width:6px;height:6px;flex-shrink:0;}
-  .av-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);}
-  .av-s{background:var(--surface);padding:10px 14px;text-align:center;}
-  .av-sv{font-family:'DM Mono',monospace;font-size:18px;font-weight:600;}
-  .av-sl{font-size:9px;color:var(--txt2);letter-spacing:.1em;text-transform:uppercase;margin-top:3px;}
+/* TABLE HEADER */
+.t-head{display:grid;grid-template-columns:56px 1fr 100px 96px 60px;padding:7px 20px 7px 52px;background:rgba(0,0,0,.3);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);font-family:'DM Mono',monospace;border-top:1px solid var(--brd);}
 
-  @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  @media(max-width:1100px){.main,.bottom{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}}
+/* MODAL */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:999;align-items:center;justify-content:center;padding:40px;}
+.modal-ov.open{display:flex;}
+.modal{background:var(--surf);border:1px solid rgba(255,255,255,.1);max-width:600px;width:100%;max-height:80vh;overflow-y:auto;animation:fu .2s ease both;}
+.m-head{padding:18px 22px;border-bottom:1px solid var(--brd);display:flex;justify-content:space-between;align-items:flex-start;}
+.m-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;line-height:1.3;}
+.m-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--txt2);margin-top:3px;}
+.m-close{background:none;border:none;color:var(--txt2);font-size:17px;cursor:pointer;}
+.m-close:hover{color:var(--txt);}
+.m-body{padding:18px 22px;}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.d-item label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;display:block;margin-bottom:3px;}
+.d-item value{font-size:13px;color:var(--txt);font-weight:500;display:block;}
+.d-sec{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt2);font-family:'DM Mono',monospace;border-bottom:1px solid var(--brd);padding-bottom:6px;margin-bottom:10px;}
+.b-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px;}
+.b-row:last-child{border:none;}
+.bl{color:var(--txt2);}.bv{font-family:'DM Mono',monospace;font-weight:500;}
+.neg{color:var(--red);}.pos{color:var(--green);}
+
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1000px){.map-wrap{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -157,10 +174,7 @@
 <header>
   <div class="logo">
     <div class="logo-sq"></div>
-    <div>
-      <div class="h-title">Panel Ejecutivo de Proyectos</div>
-      <div class="h-sub">Dirección General</div>
-    </div>
+    <div><div class="h-title">Panel Ejecutivo de Proyectos</div><div class="h-sub">Dirección General</div></div>
   </div>
   <div class="h-right">
     <div class="h-date" id="live-date"></div>
@@ -168,197 +182,375 @@
   </div>
 </header>
 
+<!-- KPIs -->
 <div class="kpis">
-  <div class="kpi kt"><div class="kpi-lbl">Total Proyectos</div><div class="kpi-val" id="kpi-tot">—</div><div class="kpi-sub">Obra + Proveeduría</div></div>
-  <div class="kpi ko"><div class="kpi-lbl">Proyectos de Obra</div><div class="kpi-val" id="kpi-ob">—</div><div class="kpi-sub" id="ks-ob">—</div></div>
-  <div class="kpi kp"><div class="kpi-lbl">Proyectos de Proveeduría</div><div class="kpi-val" id="kpi-pv">—</div><div class="kpi-sub" id="ks-pv">—</div></div>
-  <div class="kpi ko"><div class="kpi-lbl">Presupuesto Obra</div><div class="kpi-val" id="kpi-pob">—</div><div class="kpi-sub" id="ks-pob">—</div></div>
-  <div class="kpi kp"><div class="kpi-lbl">Presupuesto Proveeduría</div><div class="kpi-val" id="kpi-ppv">—</div><div class="kpi-sub" id="ks-ppv">—</div></div>
+  <div class="kpi kt"><div class="kpi-lbl">Total Proyectos</div><div class="kpi-val" id="k-tot">65</div><div class="kpi-sub">Obra + Proveeduría</div></div>
+  <div class="kpi ko"><div class="kpi-lbl">Proyectos de Obra</div><div class="kpi-val">29</div><div class="kpi-sub" id="k-ob-s">6 estados</div></div>
+  <div class="kpi kp"><div class="kpi-lbl">Proyectos de Proveeduría</div><div class="kpi-val">36</div><div class="kpi-sub" id="k-pv-s">7 estados</div></div>
+  <div class="kpi ko"><div class="kpi-lbl">Presupuesto Obra</div><div class="kpi-val" id="k-pob">—</div><div class="kpi-sub" id="k-pob-s">—</div></div>
+  <div class="kpi kp"><div class="kpi-lbl">Presupuesto Proveeduría</div><div class="kpi-val" id="k-ppv">—</div><div class="kpi-sub" id="k-ppv-s">—</div></div>
 </div>
 
-<div class="main">
-  <!-- OBRAS -->
-  <div class="panel po">
-    <div class="p-head">
-      <div class="p-head-l">
-        <div class="p-icon">🏗</div>
-        <div><div class="p-title">Proyectos de Obra</div><div class="p-sub" id="ob-lbl">—</div></div>
-      </div>
-    </div>
-    <div class="toolbar">
-      <input class="srch" id="srch-ob" placeholder="Buscar proyecto, municipio, contratista…" oninput="fO()">
-      <button class="ftag ao" onclick="sfO('t',this)">Todos</button>
-      <button class="ftag" onclick="sfO('a',this)">≥75%</button>
-      <button class="ftag" onclick="sfO('m',this)">25–74%</button>
-      <button class="ftag" onclick="sfO('b',this)">&lt;25%</button>
-    </div>
-    <div class="t-head"><div>CLAVE</div><div>PROYECTO</div><div style="text-align:right">MONTO</div><div style="text-align:right">AV. FIN.</div><div style="text-align:right">TIPO</div></div>
-    <div class="p-list" id="ob-list"></div>
-    <div class="p-foot"><div class="f-stat">Ejercido: <span id="ob-ej">—</span></div><div class="f-cnt" id="ob-cnt"></div></div>
-  </div>
-
-  <!-- PROVEEDURÍA -->
-  <div class="panel pp">
-    <div class="p-head">
-      <div class="p-head-l">
-        <div class="p-icon">📦</div>
-        <div><div class="p-title">Proyectos de Proveeduría</div><div class="p-sub" id="pv-lbl">—</div></div>
-      </div>
-    </div>
-    <div class="toolbar">
-      <input class="srch" id="srch-pv" placeholder="Buscar suministro, municipio, proveedor…" oninput="fP()">
-      <button class="ftag ap" onclick="sfP('t',this)">Todos</button>
-      <button class="ftag" onclick="sfP('c',this)">Completos</button>
-      <button class="ftag" onclick="sfP('e',this)">En proceso</button>
-      <button class="ftag" onclick="sfP('s',this)">Sin iniciar</button>
-    </div>
-    <div class="t-head"><div>CLAVE</div><div>PROYECTO</div><div style="text-align:right">PRESUP.</div><div style="text-align:right">AVANCE</div><div style="text-align:right">PROV.</div></div>
-    <div class="p-list" id="pv-list"></div>
-    <div class="p-foot"><div class="f-stat">Ejercido: <span id="pv-ej">—</span></div><div class="f-cnt" id="pv-cnt"></div></div>
-  </div>
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active-obra" onclick="showTab('obras')">🏗 Proyectos de Obra</div>
+  <div class="tab" onclick="showTab('prov')" id="tab-prov">📦 Proyectos de Proveeduría</div>
+  <div class="tab" onclick="showTab('mapa')" id="tab-map">🗺 Mapa por Estado</div>
 </div>
 
-<div class="bottom">
-  <div class="b-panel">
-    <div class="b-ph">Distribución por Estado</div>
-    <div id="s-list"></div>
-    <div class="s-leg"><div class="s-li"><div class="s-dot" style="background:var(--obra)"></div>Obra</div><div class="s-li"><div class="s-dot" style="background:var(--prov)"></div>Proveeduría</div></div>
-  </div>
-  <div class="b-panel">
-    <div class="b-ph">Distribución de Avance Financiero</div>
-    <div class="av-grid">
-      <div class="av-cell"><div class="av-ct">Obras</div><div class="av-segs" id="seg-ob"></div><div class="av-leg" id="leg-ob"></div></div>
-      <div class="av-cell"><div class="av-ct">Proveeduría</div><div class="av-segs" id="seg-pv"></div><div class="av-leg" id="leg-pv"></div></div>
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- OBRAS SECTION -->
+  <div class="section active" id="sec-obras">
+    <div class="group-header">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;">Proyectos de Obra por Estado y Municipio</div>
+      <div class="group-filter">
+        <input class="srch" id="srch-ob" placeholder="Buscar proyecto, municipio…" oninput="renderObras()">
+        <select class="state-sel" id="sel-ob" onchange="renderObras()">
+          <option value="">Todos los estados</option>
+        </select>
+      </div>
     </div>
-    <div class="av-stats" id="av-stats"></div>
+    <div id="ob-groups"></div>
   </div>
+
+  <!-- PROV SECTION -->
+  <div class="section" id="sec-prov">
+    <div class="group-header">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;">Proyectos de Proveeduría por Estado y Municipio</div>
+      <div class="group-filter">
+        <input class="srch" id="srch-pv" placeholder="Buscar suministro, proveedor…" oninput="renderProv()">
+        <select class="state-sel" id="sel-pv" onchange="renderProv()">
+          <option value="">Todos los estados</option>
+        </select>
+      </div>
+    </div>
+    <div id="pv-groups"></div>
+  </div>
+
+  <!-- MAPA SECTION -->
+  <div class="section" id="sec-mapa">
+    <div class="map-wrap">
+      <div class="map-container">
+        <div class="map-title">
+          Proyectos Activos por Estado
+          <div class="map-legend">
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#7a4a15"></div>Solo Obra</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#1a4a42"></div>Solo Proveeduría</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#6a5a20"></div>Ambos</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#1a2030"></div>Sin proyectos</div>
+          </div>
+        </div>
+        <!-- Mexico SVG Map - simplified paths for key states -->
+        <svg id="mex-map" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background -->
+          <rect width="900" height="600" fill="transparent"/>
+          
+          <!-- BAJA CALIFORNIA NORTE -->
+          <path class="state-path" data-state="BAJA CALIFORNIA" d="M 60,40 L 100,30 L 130,60 L 140,120 L 120,180 L 90,200 L 60,180 L 40,140 L 50,80 Z"/>
+          <!-- BAJA CALIFORNIA SUR -->
+          <path class="state-path" data-state="BAJA CALIFORNIA SUR" d="M 80,210 L 110,200 L 130,240 L 140,300 L 130,360 L 110,390 L 85,380 L 70,340 L 75,280 Z"/>
+          <!-- SONORA -->
+          <path class="state-path" data-state="SONORA" d="M 140,30 L 210,20 L 240,50 L 250,100 L 240,160 L 220,200 L 180,210 L 150,190 L 140,140 L 130,80 Z"/>
+          <!-- CHIHUAHUA -->
+          <path class="state-path" data-state="CHIHUAHUA" d="M 210,20 L 300,25 L 320,60 L 310,130 L 290,180 L 250,200 L 220,200 L 240,160 L 250,100 Z"/>
+          <!-- SINALOA -->
+          <path class="state-path" data-state="SINALOA" d="M 175,210 L 210,195 L 230,230 L 235,280 L 220,320 L 195,340 L 170,320 L 160,275 L 165,240 Z"/>
+          <!-- DURANGO -->
+          <path class="state-path" data-state="DURANGO" d="M 220,200 L 280,190 L 300,230 L 290,280 L 270,300 L 240,295 L 220,270 L 210,240 Z"/>
+          <!-- COAHUILA -->
+          <path class="state-path" data-state="COAHUILA" d="M 300,25 L 390,30 L 410,80 L 400,140 L 370,170 L 330,175 L 310,140 L 310,80 Z"/>
+          <!-- NUEVO LEON -->
+          <path class="state-path" data-state="NUEVO LEON" d="M 390,80 L 430,75 L 450,110 L 440,160 L 410,175 L 375,170 L 370,140 L 380,100 Z"/>
+          <!-- TAMAULIPAS -->
+          <path class="state-path" data-state="TAMAULIPAS" d="M 430,75 L 490,70 L 520,110 L 510,180 L 490,240 L 460,260 L 430,250 L 415,200 L 420,140 L 440,100 Z"/>
+          <!-- ZACATECAS -->
+          <path class="state-path" id="sp-ZACATECAS" data-state="ZACATECAS" d="M 285,195 L 330,185 L 350,215 L 345,260 L 320,280 L 290,275 L 270,250 L 275,220 Z"/>
+          <!-- SAN LUIS POTOSI -->
+          <path class="state-path" data-state="SAN LUIS POTOSI" d="M 345,185 L 395,180 L 420,215 L 415,265 L 390,285 L 355,280 L 340,255 L 345,220 Z"/>
+          <!-- NAYARIT -->
+          <path class="state-path" data-state="NAYARIT" d="M 215,280 L 245,270 L 260,295 L 255,330 L 235,345 L 215,335 L 205,310 Z"/>
+          <!-- JALISCO -->
+          <path class="state-path" data-state="JALISCO" d="M 240,275 L 300,265 L 330,290 L 325,345 L 300,370 L 265,375 L 240,355 L 230,325 L 235,295 Z"/>
+          <!-- AGUASCALIENTES -->
+          <path class="state-path" data-state="AGUASCALIENTES" d="M 300,270 L 325,265 L 332,285 L 325,305 L 305,308 L 295,292 Z"/>
+          <!-- GUANAJUATO -->
+          <path class="state-path" data-state="GUANAJUATO" d="M 330,275 L 380,268 L 400,295 L 392,325 L 365,335 L 335,328 L 322,308 L 328,285 Z"/>
+          <!-- COLIMA -->
+          <path class="state-path" id="sp-COLIMA" data-state="COLIMA" d="M 245,355 L 270,348 L 280,368 L 272,390 L 253,393 L 240,375 Z"/>
+          <!-- MICHOACAN -->
+          <path class="state-path" id="sp-MICHOACAN" data-state="MICHOACAN" d="M 275,345 L 345,335 L 380,355 L 385,395 L 360,415 L 320,420 L 285,408 L 268,385 L 270,360 Z"/>
+          <!-- QUERETARO -->
+          <path class="state-path" data-state="QUERETARO" d="M 375,270 L 405,265 L 418,288 L 410,315 L 388,320 L 373,303 L 374,282 Z"/>
+          <!-- HIDALGO -->
+          <path class="state-path" data-state="HIDALGO" d="M 405,265 L 440,260 L 455,285 L 450,315 L 425,325 L 405,315 L 400,292 Z"/>
+          <!-- ESTADO DE MEXICO -->
+          <path class="state-path" data-state="ESTADO DE MEXICO" d="M 378,315 L 415,308 L 430,330 L 425,358 L 400,365 L 378,355 L 368,338 Z"/>
+          <!-- CDMX -->
+          <path class="state-path" id="sp-CDMX" data-state="CDMX" d="M 408,325 L 425,320 L 432,338 L 425,352 L 408,353 L 400,340 Z"/>
+          <!-- TLAXCALA -->
+          <path class="state-path" data-state="TLAXCALA" d="M 435,298 L 455,294 L 462,312 L 454,325 L 437,325 L 430,310 Z"/>
+          <!-- PUEBLA -->
+          <path class="state-path" data-state="PUEBLA" d="M 440,290 L 490,285 L 510,315 L 505,365 L 475,385 L 445,380 L 428,355 L 432,320 L 450,298 Z"/>
+          <!-- GUERRERO -->
+          <path class="state-path" data-state="GUERRERO" d="M 345,375 L 400,365 L 430,390 L 440,430 L 420,460 L 385,465 L 355,450 L 335,420 L 338,390 Z"/>
+          <!-- MORELOS -->
+          <path class="state-path" data-state="MORELOS" d="M 415,355 L 440,350 L 448,370 L 440,388 L 418,390 L 408,372 Z"/>
+          <!-- TLAXCALA ya definida arriba -->
+          <!-- VERACRUZ -->
+          <path class="state-path" id="sp-VERACRUZ" data-state="VERACRUZ" d="M 490,230 L 530,220 L 560,255 L 565,310 L 555,370 L 530,405 L 500,415 L 475,395 L 468,350 L 475,295 L 480,255 Z"/>
+          <!-- OAXACA -->
+          <path class="state-path" data-state="OAXACA" d="M 445,385 L 505,378 L 540,405 L 545,450 L 520,475 L 480,480 L 450,465 L 435,440 L 438,408 Z"/>
+          <!-- CHIAPAS -->
+          <path class="state-path" id="sp-CHIAPAS" data-state="CHIAPAS" d="M 510,415 L 565,405 L 600,430 L 610,465 L 585,490 L 545,495 L 515,480 L 500,455 L 505,430 Z"/>
+          <!-- TABASCO -->
+          <path class="state-path" id="sp-TABASCO" data-state="TABASCO" d="M 535,375 L 580,368 L 600,390 L 600,420 L 575,430 L 545,425 L 528,408 Z"/>
+          <!-- CAMPECHE -->
+          <path class="state-path" data-state="CAMPECHE" d="M 575,360 L 625,350 L 650,380 L 645,430 L 615,445 L 585,440 L 565,418 L 565,390 Z"/>
+          <!-- YUCATAN -->
+          <path class="state-path" id="sp-YUCATAN" data-state="YUCATAN" d="M 600,320 L 670,310 L 700,335 L 695,375 L 660,385 L 620,380 L 595,360 Z"/>
+          <!-- QUINTANA ROO -->
+          <path class="state-path" id="sp-QUINTANA ROO" data-state="QUINTANA ROO" d="M 680,320 L 720,315 L 740,345 L 735,420 L 710,445 L 685,440 L 665,415 L 662,375 L 670,345 Z"/>
+
+          <!-- State labels -->
+          <text x="475" y="325" font-size="8" fill="rgba(255,255,255,0.5)" text-anchor="middle" font-family="DM Mono">CDMX</text>
+          <text x="555" y="395" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">VER.</text>
+          <text x="565" y="450" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">CHIS.</text>
+          <text x="568" y="405" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">TAB.</text>
+          <text x="645" y="350" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">YUC.</text>
+          <text x="700" y="380" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">Q.ROO</text>
+          <text x="315" y="255" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">ZAC.</text>
+          <text x="262" y="375" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">COL.</text>
+          <text x="324" y="385" font-size="8" fill="rgba(255,255,255,0.4)" text-anchor="middle" font-family="DM Mono">MICH.</text>
+        </svg>
+        <!-- Tooltip -->
+        <div class="state-tooltip" id="map-tooltip"></div>
+      </div>
+
+      <!-- Side cards -->
+      <div class="map-side" id="map-side"></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- MODAL -->
 <div class="modal-ov" id="mov" onclick="cm(event)">
   <div class="modal" onclick="event.stopPropagation()">
-    <div class="m-head"><div><div class="m-title" id="mt"></div><div class="m-clave" id="mc"></div></div><button class="m-close" onclick="cm()">✕</button></div>
+    <div class="m-head">
+      <div><div class="m-title" id="mt"></div><div class="m-meta" id="mc"></div></div>
+      <button class="m-close" onclick="cm()">✕</button>
+    </div>
     <div class="m-body" id="mb"></div>
   </div>
 </div>
 
 <script>
-const OBRAS=[{"clave":"P-0001","proyecto":"OBRA ELECTRICA AVENIDA 10 NORTE","estado":"QUINTANA ROO","municipio":"PLAYA DEL CARMEN","inicio":"20/10/2025","termino":"—","tipo_ejecucion":"CONTRATISTA","razon_social":"","num_contrato":"","monto":3871546.95,"presupuesto":2138806.14,"avance_fisico":99,"avance_financiero":100,"ejercido":2139731.89,"disponible":-925.75},{"clave":"P-0010","proyecto":"CANCHA PUBLICA, TEJERIA","estado":"TABASCO","municipio":"TEAPA","inicio":"29/08/2025","termino":"11/11/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"TEA-DOOTSM-AD21/2025","monto":2876074.74,"presupuesto":1521616.72,"avance_fisico":95,"avance_financiero":99,"ejercido":1511408.14,"disponible":10208.58},{"clave":"P-0011","proyecto":"PAV. PEDRO COLORADO CENTLA","estado":"TABASCO","municipio":"CENTLA","inicio":"03/09/2025","termino":"06/11/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"MATERIALES GONIA SA DE CV","num_contrato":"CO-DOOTSM-33-030-230-08-K003/2025","monto":9303329.73,"presupuesto":6283798.68,"avance_fisico":100,"avance_financiero":96,"ejercido":6022782.8,"disponible":261015.88},{"clave":"P-0013","proyecto":"XOCHIMILCO","estado":"CDMX","municipio":"CDMX","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"KUKULKAN ENERGY SA DE CV","num_contrato":"","monto":0,"presupuesto":0,"avance_fisico":100,"avance_financiero":0,"ejercido":0,"disponible":0},{"clave":"P-0016","proyecto":"MUROS DE CONTENCION, PICHUCALCO","estado":"CHIAPAS","municipio":"PICHUCALCO","inicio":"15/08/2025","termino":"15/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"","num_contrato":"MPC/COP/068//FOGIRD/12ª.EXT.VI.IV-001/2025","monto":3499020.35,"presupuesto":1917577.64,"avance_fisico":100,"avance_financiero":86,"ejercido":1647003.12,"disponible":270574.52},{"clave":"P-0019","proyecto":"BACHEO EN CABECERA MUNICIPAL, PICHUCALCO","estado":"CHIAPAS","municipio":"PICHUCALCO","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"","monto":3192624.21,"presupuesto":1748102.68,"avance_fisico":90,"avance_financiero":34,"ejercido":590681.58,"disponible":1157421.1},{"clave":"P-0020","proyecto":"TEAPA DRENAJE PLUVIAL RIO TULIJÁ","estado":"TABASCO","municipio":"TEAPA","inicio":"31/10/2025","termino":"14/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"TEA-CONT-DOOTSM-036-AD36/2025","monto":876986.98,"presupuesto":585545.9,"avance_fisico":95,"avance_financiero":83,"ejercido":484857.78,"disponible":100688.12},{"clave":"P-0021","proyecto":"TEAPA DRENAJE SANITARIO RIO TULIJÁ","estado":"TABASCO","municipio":"TEAPA","inicio":"31/10/2025","termino":"14/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"TEA-CONT-DOOTSM-035-AD35/2025","monto":678795.49,"presupuesto":455181.06,"avance_fisico":95,"avance_financiero":90,"ejercido":411587.31,"disponible":43593.75},{"clave":"P-0024","proyecto":"GUARNICIONES Y BANQUETAS RIO TULIJÁ","estado":"TABASCO","municipio":"TEAPA","inicio":"12/11/2025","termino":"26/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"TEA-CONT-DOOTSM-043-AD43/2025","monto":463416.98,"presupuesto":285481.31,"avance_fisico":95,"avance_financiero":100,"ejercido":284482.15,"disponible":999.16},{"clave":"P-0025","proyecto":"PAVIMENTO CONCRETO RIO TULIJÁ","estado":"TABASCO","municipio":"TEAPA","inicio":"12/11/2025","termino":"26/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"EA-CONT-DOOTSM-044-AD44/2025","monto":1660622.59,"presupuesto":1034333.72,"avance_fisico":83,"avance_financiero":95,"ejercido":985608.83,"disponible":48724.89},{"clave":"P-0023","proyecto":"MERIDA 4 COL. EMILIANO ZAPATA CONT. 168","estado":"YUCATAN","municipio":"MERIDA","inicio":"24/11/2025","termino":"25/12/2025","tipo_ejecucion":"CONTRATISTA","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"VT25-FICON-6152-168","monto":4099650.28,"presupuesto":2757783.77,"avance_fisico":100,"avance_financiero":101,"ejercido":2795422.05,"disponible":-37638.28},{"clave":"P-0133","proyecto":"MERIDA 5 REPAV CONTRATO 267","estado":"YUCATAN","municipio":"MERIDA","inicio":"—","termino":"—","tipo_ejecucion":"CONTRATISTA","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"VT25-FPCON-6152-267","monto":3769722.18,"presupuesto":2525500,"avance_fisico":15,"avance_financiero":41,"ejercido":1025429.64,"disponible":1500070.36},{"clave":"P-0026","proyecto":"REHABILITACION DE TANQUE PICHUCALCO","estado":"CHIAPAS","municipio":"PICHUCALCO","inicio":"21/10/2025","termino":"19/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV","num_contrato":"MPC/COP/068/FISM-033/2025","monto":1573664.28,"presupuesto":972574.55,"avance_fisico":73,"avance_financiero":100,"ejercido":977027.98,"disponible":-4453.43},{"clave":"P-0027","proyecto":"CONSTRUCCION DE POZOS PLATANAR","estado":"CHIAPAS","municipio":"PICHUCALCO","inicio":"21/10/2025","termino":"19/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV","num_contrato":"MPC/COP/068/FISM-034/2025","monto":1641541.64,"presupuesto":819996.46,"avance_fisico":100,"avance_financiero":100,"ejercido":819996.45,"disponible":0.01},{"clave":"P-0074","proyecto":"REHAB. CAMINOS RA. SANTUARIO 1RA. SEC. NO.43","estado":"TABASCO","municipio":"JALPA DE MENDEZ","inicio":"17/11/2025","termino":"06/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV","num_contrato":"MJM-CONT-DOOTSM-043/2025","monto":597092.98,"presupuesto":382664.03,"avance_fisico":100,"avance_financiero":101,"ejercido":386143.08,"disponible":-3479.05},{"clave":"P-0075","proyecto":"REHAB. CAMINOS RA. CHACALAPA 2DA. SEC. NO.56","estado":"TABASCO","municipio":"JALPA DE MENDEZ","inicio":"17/11/2025","termino":"16/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"MATERIALES GONIA SA DE CV","num_contrato":"MJM-CONT-DOOTSM-056/2025","monto":900024.77,"presupuesto":591537.19,"avance_fisico":100,"avance_financiero":96,"ejercido":570356.45,"disponible":21180.74},{"clave":"P-0076","proyecto":"REHAB. CAMINOS TRAMO LA MANGA EJIDO EL PULPITO","estado":"TABASCO","municipio":"JALPA DE MENDEZ","inicio":"17/11/2025","termino":"16/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"SUMSURES DE MEXICO SA DE CV","num_contrato":"MJM-CONT-DOOTSM-057/2025","monto":587009.59,"presupuesto":379517.48,"avance_fisico":100,"avance_financiero":99,"ejercido":374752.33,"disponible":4765.15},{"clave":"P-0077","proyecto":"REHAB. CAMINOS RA. HUAPACAL 2DA. SEC. NO.58","estado":"TABASCO","municipio":"JALPA DE MENDEZ","inicio":"20/11/2025","termino":"19/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","num_contrato":"MJM-CONT-DOOTSM-058/2025","monto":1048267.91,"presupuesto":688421.12,"avance_fisico":100,"avance_financiero":100,"ejercido":687930.39,"disponible":490.73},{"clave":"P-0078","proyecto":"REHAB. CAMINOS EJIDO IQUINUAPA NO.59","estado":"TABASCO","municipio":"JALPA DE MENDEZ","inicio":"20/11/2025","termino":"19/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV","num_contrato":"MJM-CONT-DOOTSM-059/2025","monto":885738.04,"presupuesto":587809.23,"avance_fisico":100,"avance_financiero":101,"ejercido":592399.06,"disponible":-4589.83},{"clave":"P-0100","proyecto":"TECNOLOGICO DE COMALCALCO","estado":"TABASCO","municipio":"COMALCALCO","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"SUMINISTROS EN PRODUCTOS Y SERVICIOS SAJ SA DE CV","num_contrato":"","monto":546677.16,"presupuesto":288942.28,"avance_fisico":100,"avance_financiero":76,"ejercido":218718.63,"disponible":70223.65},{"clave":"P-0082","proyecto":"REHABILITACION PARQUE EL AMOR","estado":"TABASCO","municipio":"JONUTA","inicio":"17/11/2025","termino":"16/12/2025","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"MATERIALES GONIA SA DE CV","num_contrato":"MJO-DOOTSM-FAISMUN-CONT0095/2025","monto":1541514.09,"presupuesto":937500,"avance_fisico":90,"avance_financiero":100,"ejercido":937375.21,"disponible":124.79},{"clave":"P-0107","proyecto":"SANTIAGO TUXTLA, VERACRUZ","estado":"VERACRUZ","municipio":"SANTIAGO TUXTLA","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"ESTRATEGIAS MAX INNOVA","num_contrato":"","monto":11273811.43,"presupuesto":5712650.61,"avance_fisico":65,"avance_financiero":11,"ejercido":615619.45,"disponible":5097031.16},{"clave":"P-0108","proyecto":"CATEMACO MALECON, VERACRUZ","estado":"VERACRUZ","municipio":"CATEMACO","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"ESTRATEGIAS MAX INNOVA","num_contrato":"","monto":3990747.63,"presupuesto":1943812.67,"avance_fisico":90,"avance_financiero":69,"ejercido":1331626.55,"disponible":612186.12},{"clave":"P-0112","proyecto":"PASO DE OVEJAS, VERACRUZ","estado":"VERACRUZ","municipio":"PASO DE OVEJAS","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"ESTRATEGIAS MAX INNOVA","num_contrato":"","monto":204965.23,"presupuesto":105413.72,"avance_fisico":0,"avance_financiero":20,"ejercido":21516.58,"disponible":83897.14},{"clave":"P-0127","proyecto":"ALUMBRADO PAJAPAN, VERACRUZ","estado":"VERACRUZ","municipio":"PAJAPAN","inicio":"—","termino":"—","tipo_ejecucion":"ADMINISTRATIVO","razon_social":"ESTRATEGIAS MAX INNOVA","num_contrato":"","monto":3817306.4,"presupuesto":1930368.83,"avance_fisico":0,"avance_financiero":0,"ejercido":0,"disponible":1930368.83},{"clave":"P-0134","proyecto":"REHAB. DRENAJE SANITARIO TECTUAPAN","estado":"CHIAPAS","municipio":"PICHUCALCO","inicio":"—","termino":"—","tipo_ejecucion":"CONTRATISTA","razon_social":"","num_contrato":"MPC/COP/068/FAISMUN-003/2026","monto":855849.79,"presupuesto":411885.02,"avance_fisico":0,"avance_financiero":0,"ejercido":1200,"disponible":410685.02},{"clave":"P-0139","proyecto":"REHAB. DRENAJE SANITARIO, CALLE PONCIANO ROJAS","estado":"CHIAPAS","municipio":"PICHUCALCO","inicio":"—","termino":"—","tipo_ejecucion":"CONTRATISTA","razon_social":"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV","num_contrato":"","monto":1279789.53,"presupuesto":634997.64,"avance_fisico":100,"avance_financiero":85,"ejercido":541480.13,"disponible":93517.51},{"clave":"P-0142","proyecto":"AMPLIACION BAJA TENSION AV. 10","estado":"QUINTANA ROO","municipio":"PLAYA DEL CARMEN","inicio":"02/02/2026","termino":"14/02/2026","tipo_ejecucion":"CONTRATISTA","razon_social":"","num_contrato":"","monto":181486.07,"presupuesto":102112.3,"avance_fisico":0,"avance_financiero":98,"ejercido":100383.37,"disponible":1728.93},{"clave":"P-0143","proyecto":"ALUMBRADO CENTRO DE SALUD LDC","estado":"QUINTANA ROO","municipio":"PLAYA DEL CARMEN","inicio":"—","termino":"—","tipo_ejecucion":"CONTRATISTA","razon_social":"","num_contrato":"","monto":1006575.28,"presupuesto":571190.39,"avance_fisico":0,"avance_financiero":21,"ejercido":121109.86,"disponible":450080.53}];
+/* ═══ DATA ═══ */
+const OBRAS=[{clave:"P-0001",proyecto:"OBRA ELECTRICA AVENIDA 10 NORTE",estado:"QUINTANA ROO",municipio:"PLAYA DEL CARMEN",inicio:"20/10/2025",termino:"—",tipo_ejecucion:"CONTRATISTA",razon_social:"",num_contrato:"",monto:3871546.95,presupuesto:2138806.14,avance_fisico:99,avance_financiero:100,ejercido:2139731.89,disponible:-925.75},{clave:"P-0010",proyecto:"CANCHA PUBLICA, TEJERIA",estado:"TABASCO",municipio:"TEAPA",inicio:"29/08/2025",termino:"11/11/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"TEA-DOOTSM-AD21/2025",monto:2876074.74,presupuesto:1521616.72,avance_fisico:95,avance_financiero:99,ejercido:1511408.14,disponible:10208.58},{clave:"P-0011",proyecto:"PAV. PEDRO COLORADO CENTLA",estado:"TABASCO",municipio:"CENTLA",inicio:"03/09/2025",termino:"06/11/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"MATERIALES GONIA SA DE CV",num_contrato:"CO-DOOTSM-33-030-230-08-K003/2025",monto:9303329.73,presupuesto:6283798.68,avance_fisico:100,avance_financiero:96,ejercido:6022782.8,disponible:261015.88},{clave:"P-0013",proyecto:"XOCHIMILCO",estado:"CDMX",municipio:"CDMX",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"KUKULKAN ENERGY SA DE CV",num_contrato:"",monto:0,presupuesto:0,avance_fisico:100,avance_financiero:0,ejercido:0,disponible:0},{clave:"P-0016",proyecto:"MUROS DE CONTENCION, PICHUCALCO",estado:"CHIAPAS",municipio:"PICHUCALCO",inicio:"15/08/2025",termino:"15/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"",num_contrato:"MPC/COP/068//FOGIRD/12ª.EXT.VI.IV-001/2025",monto:3499020.35,presupuesto:1917577.64,avance_fisico:100,avance_financiero:86,ejercido:1647003.12,disponible:270574.52},{clave:"P-0019",proyecto:"BACHEO EN CABECERA MUNICIPAL, PICHUCALCO",estado:"CHIAPAS",municipio:"PICHUCALCO",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"",monto:3192624.21,presupuesto:1748102.68,avance_fisico:90,avance_financiero:34,ejercido:590681.58,disponible:1157421.1},{clave:"P-0020",proyecto:"TEAPA DRENAJE PLUVIAL RIO TULIJÁ",estado:"TABASCO",municipio:"TEAPA",inicio:"31/10/2025",termino:"14/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"TEA-CONT-DOOTSM-036-AD36/2025",monto:876986.98,presupuesto:585545.9,avance_fisico:95,avance_financiero:83,ejercido:484857.78,disponible:100688.12},{clave:"P-0021",proyecto:"TEAPA DRENAJE SANITARIO RIO TULIJÁ",estado:"TABASCO",municipio:"TEAPA",inicio:"31/10/2025",termino:"14/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"TEA-CONT-DOOTSM-035-AD35/2025",monto:678795.49,presupuesto:455181.06,avance_fisico:95,avance_financiero:90,ejercido:411587.31,disponible:43593.75},{clave:"P-0024",proyecto:"GUARNICIONES Y BANQUETAS RIO TULIJÁ",estado:"TABASCO",municipio:"TEAPA",inicio:"12/11/2025",termino:"26/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"TEA-CONT-DOOTSM-043-AD43/2025",monto:463416.98,presupuesto:285481.31,avance_fisico:95,avance_financiero:100,ejercido:284482.15,disponible:999.16},{clave:"P-0025",proyecto:"PAVIMENTO CONCRETO RIO TULIJÁ",estado:"TABASCO",municipio:"TEAPA",inicio:"12/11/2025",termino:"26/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"EA-CONT-DOOTSM-044-AD44/2025",monto:1660622.59,presupuesto:1034333.72,avance_fisico:83,avance_financiero:95,ejercido:985608.83,disponible:48724.89},{clave:"P-0023",proyecto:"MERIDA 4 COL. EMILIANO ZAPATA CONT. 168",estado:"YUCATAN",municipio:"MERIDA",inicio:"24/11/2025",termino:"25/12/2025",tipo_ejecucion:"CONTRATISTA",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"VT25-FICON-6152-168",monto:4099650.28,presupuesto:2757783.77,avance_fisico:100,avance_financiero:101,ejercido:2795422.05,disponible:-37638.28},{clave:"P-0133",proyecto:"MERIDA 5 REPAV CONTRATO 267",estado:"YUCATAN",municipio:"MERIDA",inicio:"—",termino:"—",tipo_ejecucion:"CONTRATISTA",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"VT25-FPCON-6152-267",monto:3769722.18,presupuesto:2525500,avance_fisico:15,avance_financiero:41,ejercido:1025429.64,disponible:1500070.36},{clave:"P-0026",proyecto:"REHABILITACION DE TANQUE PICHUCALCO",estado:"CHIAPAS",municipio:"PICHUCALCO",inicio:"21/10/2025",termino:"19/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV",num_contrato:"MPC/COP/068/FISM-033/2025",monto:1573664.28,presupuesto:972574.55,avance_fisico:73,avance_financiero:100,ejercido:977027.98,disponible:-4453.43},{clave:"P-0027",proyecto:"CONSTRUCCION DE POZOS PLATANAR",estado:"CHIAPAS",municipio:"PICHUCALCO",inicio:"21/10/2025",termino:"19/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV",num_contrato:"MPC/COP/068/FISM-034/2025",monto:1641541.64,presupuesto:819996.46,avance_fisico:100,avance_financiero:100,ejercido:819996.45,disponible:0.01},{clave:"P-0074",proyecto:"REHAB. CAMINOS RA. SANTUARIO 1RA. SEC.",estado:"TABASCO",municipio:"JALPA DE MENDEZ",inicio:"17/11/2025",termino:"06/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV",num_contrato:"MJM-CONT-DOOTSM-043/2025",monto:597092.98,presupuesto:382664.03,avance_fisico:100,avance_financiero:101,ejercido:386143.08,disponible:-3479.05},{clave:"P-0075",proyecto:"REHAB. CAMINOS RA. CHACALAPA 2DA. SEC.",estado:"TABASCO",municipio:"JALPA DE MENDEZ",inicio:"17/11/2025",termino:"16/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"MATERIALES GONIA SA DE CV",num_contrato:"MJM-CONT-DOOTSM-056/2025",monto:900024.77,presupuesto:591537.19,avance_fisico:100,avance_financiero:96,ejercido:570356.45,disponible:21180.74},{clave:"P-0076",proyecto:"REHAB. CAMINOS TRAMO LA MANGA",estado:"TABASCO",municipio:"JALPA DE MENDEZ",inicio:"17/11/2025",termino:"16/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"SUMSURES DE MEXICO SA DE CV",num_contrato:"MJM-CONT-DOOTSM-057/2025",monto:587009.59,presupuesto:379517.48,avance_fisico:100,avance_financiero:99,ejercido:374752.33,disponible:4765.15},{clave:"P-0077",proyecto:"REHAB. CAMINOS RA. HUAPACAL 2DA. SEC.",estado:"TABASCO",municipio:"JALPA DE MENDEZ",inicio:"20/11/2025",termino:"19/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",num_contrato:"MJM-CONT-DOOTSM-058/2025",monto:1048267.91,presupuesto:688421.12,avance_fisico:100,avance_financiero:100,ejercido:687930.39,disponible:490.73},{clave:"P-0078",proyecto:"REHAB. CAMINOS EJIDO IQUINUAPA",estado:"TABASCO",municipio:"JALPA DE MENDEZ",inicio:"20/11/2025",termino:"19/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV",num_contrato:"MJM-CONT-DOOTSM-059/2025",monto:885738.04,presupuesto:587809.23,avance_fisico:100,avance_financiero:101,ejercido:592399.06,disponible:-4589.83},{clave:"P-0100",proyecto:"TECNOLOGICO DE COMALCALCO",estado:"TABASCO",municipio:"COMALCALCO",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"SUMINISTROS EN PRODUCTOS Y SERVICIOS SAJ SA DE CV",num_contrato:"",monto:546677.16,presupuesto:288942.28,avance_fisico:100,avance_financiero:76,ejercido:218718.63,disponible:70223.65},{clave:"P-0082",proyecto:"REHABILITACION PARQUE EL AMOR",estado:"TABASCO",municipio:"JONUTA",inicio:"17/11/2025",termino:"16/12/2025",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"MATERIALES GONIA SA DE CV",num_contrato:"MJO-DOOTSM-FAISMUN-CONT0095/2025",monto:1541514.09,presupuesto:937500,avance_fisico:90,avance_financiero:100,ejercido:937375.21,disponible:124.79},{clave:"P-0107",proyecto:"SANTIAGO TUXTLA, VERACRUZ",estado:"VERACRUZ",municipio:"SANTIAGO TUXTLA",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"ESTRATEGIAS MAX INNOVA",num_contrato:"",monto:11273811.43,presupuesto:5712650.61,avance_fisico:65,avance_financiero:11,ejercido:615619.45,disponible:5097031.16},{clave:"P-0108",proyecto:"CATEMACO MALECON, VERACRUZ",estado:"VERACRUZ",municipio:"CATEMACO",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"ESTRATEGIAS MAX INNOVA",num_contrato:"",monto:3990747.63,presupuesto:1943812.67,avance_fisico:90,avance_financiero:69,ejercido:1331626.55,disponible:612186.12},{clave:"P-0112",proyecto:"PASO DE OVEJAS, VERACRUZ",estado:"VERACRUZ",municipio:"PASO DE OVEJAS",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"ESTRATEGIAS MAX INNOVA",num_contrato:"",monto:204965.23,presupuesto:105413.72,avance_fisico:0,avance_financiero:20,ejercido:21516.58,disponible:83897.14},{clave:"P-0127",proyecto:"ALUMBRADO PAJAPAN, VERACRUZ",estado:"VERACRUZ",municipio:"PAJAPAN",inicio:"—",termino:"—",tipo_ejecucion:"ADMINISTRATIVO",razon_social:"ESTRATEGIAS MAX INNOVA",num_contrato:"",monto:3817306.4,presupuesto:1930368.83,avance_fisico:0,avance_financiero:0,ejercido:0,disponible:1930368.83},{clave:"P-0134",proyecto:"REHAB. DRENAJE SANITARIO TECTUAPAN",estado:"CHIAPAS",municipio:"PICHUCALCO",inicio:"—",termino:"—",tipo_ejecucion:"CONTRATISTA",razon_social:"",num_contrato:"MPC/COP/068/FAISMUN-003/2026",monto:855849.79,presupuesto:411885.02,avance_fisico:0,avance_financiero:0,ejercido:1200,disponible:410685.02},{clave:"P-0139",proyecto:"REHAB. DRENAJE SANITARIO, PONCIANO ROJAS",estado:"CHIAPAS",municipio:"PICHUCALCO",inicio:"—",termino:"—",tipo_ejecucion:"CONTRATISTA",razon_social:"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV",num_contrato:"",monto:1279789.53,presupuesto:634997.64,avance_fisico:100,avance_financiero:85,ejercido:541480.13,disponible:93517.51},{clave:"P-0142",proyecto:"AMPLIACION BAJA TENSION AV. 10",estado:"QUINTANA ROO",municipio:"PLAYA DEL CARMEN",inicio:"02/02/2026",termino:"14/02/2026",tipo_ejecucion:"CONTRATISTA",razon_social:"",num_contrato:"",monto:181486.07,presupuesto:102112.3,avance_fisico:0,avance_financiero:98,ejercido:100383.37,disponible:1728.93},{clave:"P-0143",proyecto:"ALUMBRADO CENTRO DE SALUD LDC",estado:"QUINTANA ROO",municipio:"PLAYA DEL CARMEN",inicio:"—",termino:"—",tipo_ejecucion:"CONTRATISTA",razon_social:"",num_contrato:"",monto:1006575.28,presupuesto:571190.39,avance_fisico:0,avance_financiero:21,ejercido:121109.86,disponible:450080.53}];
 
-const PROV=[{"clave":"PP-0001","proyecto":"DESAZOLVE DE ARROYO EL CRISTO","estado":"CHIAPAS","municipio":"PICHUCALCO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":0},{"clave":"PP-0002","proyecto":"DESPENSAS XOCHIMILCO","estado":"CDMX","municipio":"CDMX","razon_social":"GRUPO VENDOX COMERCIAL SA DE CV","monto":5850000,"presupuesto":5850000,"avance":53,"ejercido_suministro":2111941.15},{"clave":"PP-0003","proyecto":"DESPENSAS NAUCALPAN","estado":"CDMX","municipio":"CDMX","razon_social":"GRUPO VENDOX COMERCIAL SA DE CV","monto":0,"presupuesto":23600000,"avance":100,"ejercido_suministro":13673085.7},{"clave":"PP-0004","proyecto":"H AYUNTAMIENTO TEAPA","estado":"TABASCO","municipio":"TEAPA","razon_social":"","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":107961.19},{"clave":"PP-0005","proyecto":"ARRENDAMIENTO VEHICULAR TEAPA","estado":"TABASCO","municipio":"TEAPA","razon_social":"KUKULKAN ENERGY SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":397936.51},{"clave":"PP-0006","proyecto":"ARRENDAMIENTO RETROEXCAVADORA COLIMA","estado":"COLIMA","municipio":"COLIMA","razon_social":"","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":0},{"clave":"PP-0007","proyecto":"ARRENDAMIENTO VEHICULAR PICHUCALCO","estado":"CHIAPAS","municipio":"PICHUCALCO","razon_social":"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":28023},{"clave":"PP-0008","proyecto":"ARRENDAMIENTO VEHICULAR JALAPA","estado":"TABASCO","municipio":"JALAPA","razon_social":"KUKULKAN ENERGY SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":24588},{"clave":"PP-0009","proyecto":"CONGRESO DEL ESTADO DE TABASCO","estado":"TABASCO","municipio":"VILLAHERMOSA","razon_social":"MATERIALES GONIA SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":0},{"clave":"PP-0010","proyecto":"FRESNILLO ZACATECAS","estado":"ZACATECAS","municipio":"FRESNILLO","razon_social":"KUKULKAN ENERGY SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":0},{"clave":"PP-0011","proyecto":"PAPELERIA IEAT","estado":"TABASCO","municipio":"VILLAHERMOSA","razon_social":"","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":4230.25},{"clave":"PP-0012","proyecto":"REHABILITACION DE CAMINO RURAL (CERRO 2)","estado":"CHIAPAS","municipio":"PICHUCALCO","razon_social":"INGENIERIA MEXICANA GAMAN SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":0},{"clave":"PP-0013","proyecto":"AYUNTAMIENTO PICHUCALCO","estado":"CHIAPAS","municipio":"PICHUCALCO","razon_social":"","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":75033.11},{"clave":"PP-0014","proyecto":"LEVANTAMIENTOS ZITACUARO","estado":"MICHOACAN","municipio":"ZITACUARO","razon_social":"","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":0},{"clave":"PP-0015","proyecto":"AMBULANCIA IXHUATLAN DEL SURESTE","estado":"VERACRUZ","municipio":"IXHUATLÁN DEL SURESTE","razon_social":"","monto":0,"presupuesto":1307733.54,"avance":0,"ejercido_suministro":1307733.54},{"clave":"PP-0016","proyecto":"PIPA, PASO DE OVEJA VER.","estado":"VERACRUZ","municipio":"PASO DE OVEJAS","razon_social":"ESTRATEGIAS MAX INNOVA","monto":1920000,"presupuesto":1283000,"avance":100,"ejercido_suministro":1283000},{"clave":"PP-0017","proyecto":"AMBULANCIA, CATEMACO VER.","estado":"VERACRUZ","municipio":"CATEMACO","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2327396.03,"presupuesto":1340016.92,"avance":100,"ejercido_suministro":1275450.16},{"clave":"PP-0018","proyecto":"COMPACTADOR, PASO DE OVEJAS VER.","estado":"VERACRUZ","municipio":"PASO DE OVEJAS","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2350000,"presupuesto":1550000,"avance":100,"ejercido_suministro":1550000},{"clave":"PP-0019","proyecto":"VOLTEO, PASO DE OVEJAS VER.","estado":"VERACRUZ","municipio":"PASO DE OVEJAS","razon_social":"ESTRATEGIAS MAX INNOVA","monto":1950000,"presupuesto":1315000,"avance":100,"ejercido_suministro":1315000},{"clave":"PP-0020","proyecto":"AMBULANCIA, CHINAMECA VER.","estado":"VERACRUZ","municipio":"CHINAMECA","razon_social":"ESTRATEGIAS MAX INNOVA","monto":1888094.39,"presupuesto":1307734.16,"avance":100,"ejercido_suministro":1307733.54},{"clave":"PP-0021","proyecto":"MODIFICADA AMBULANCIA, XICO","estado":"VERACRUZ","municipio":"XICO","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2960000,"presupuesto":1916184.32,"avance":100,"ejercido_suministro":1307733.54},{"clave":"PP-0022","proyecto":"RETROEXCAVADORA, XICO VER.","estado":"VERACRUZ","municipio":"XICO","razon_social":"ESTRATEGIAS MAX INNOVA","monto":3600000,"presupuesto":1600000,"avance":100,"ejercido_suministro":1600000},{"clave":"PP-0023","proyecto":"RODILLO, XICO VER.","estado":"VERACRUZ","municipio":"XICO","razon_social":"ESTRATEGIAS MAX INNOVA","monto":4502880,"presupuesto":2294000,"avance":100,"ejercido_suministro":2294000},{"clave":"PP-0024","proyecto":"CAMIÓN COMPACTADOR 21Y, XICO VER.","estado":"VERACRUZ","municipio":"XICO","razon_social":"ESTRATEGIAS MAX INNOVA","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":3108500},{"clave":"PP-0025","proyecto":"ALIMENTOS CENDIS XOCHIMILCO 2026","estado":"CDMX","municipio":"CDMX","razon_social":"COMERCIALIZADORA RIO LIBRE MX SA DE CV","monto":0,"presupuesto":0,"avance":0,"ejercido_suministro":50732},{"clave":"PP-0026","proyecto":"CAMIÓN COMPACTADOR SAYULA, VER","estado":"VERACRUZ","municipio":"SAYULA","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000},{"clave":"PP-0027","proyecto":"CAMIÓN COMPACTADOR TEXISTEPEC, VER","estado":"VERACRUZ","municipio":"TEXISTEPEC","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000},{"clave":"PP-0028","proyecto":"CAMIÓN COMPACTADOR IXHUATLÁN, VER","estado":"VERACRUZ","municipio":"IXHUATLÁN DEL SURESTE","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000},{"clave":"PP-0029","proyecto":"CAMIÓN COMPACTADOR COTAXTLA, VER","estado":"VERACRUZ","municipio":"COTAXTLA","razon_social":"ESTRATEGIAS MAX INNOVA","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000},{"clave":"PP-0030","proyecto":"14 YARDAS COMPACTADOR 2023 AYAHULULCO","estado":"VERACRUZ","municipio":"AYAHUALULCO","razon_social":"","monto":2380000,"presupuesto":1438000,"avance":100,"ejercido_suministro":1438000},{"clave":"PP-0031","proyecto":"14 YARDAS COMPACTADOR 2023 RAFAEL LUCIO","estado":"VERACRUZ","municipio":"RAFAEL LUCIO","razon_social":"","monto":2380000,"presupuesto":1438000,"avance":100,"ejercido_suministro":1156000},{"clave":"PP-0032","proyecto":"14 YARDAS COMPACTADOR 2023 ACAJETE","estado":"VERACRUZ","municipio":"CAJEME","razon_social":"","monto":2380000,"presupuesto":1438000,"avance":100,"ejercido_suministro":1438000},{"clave":"PP-0033","proyecto":"14 YARDAS COMPACTADOR 2023 YECAUTLA","estado":"VERACRUZ","municipio":"YECAUTLA","razon_social":"","monto":2380000,"presupuesto":1438000,"avance":100,"ejercido_suministro":1438000},{"clave":"PP-0034","proyecto":"21 YARDAS COMPACTADOR 2023 BANDERILLA","estado":"VERACRUZ","municipio":"BANDERILLA","razon_social":"","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000},{"clave":"PP-0035","proyecto":"21 YARDAS COMPACTADOR 2023 IXHUATLAN DEL CAFE","estado":"VERACRUZ","municipio":"IXHUATLAN DEL CAFE","razon_social":"","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000},{"clave":"PP-0036","proyecto":"21 YARDAS COMPACTADOR 2023 COSAUTLAN","estado":"VERACRUZ","municipio":"COSAULTLAN","razon_social":"","monto":2580000,"presupuesto":1720000,"avance":100,"ejercido_suministro":1720000}];
+const PROV=[{clave:"PP-0001",proyecto:"DESAZOLVE DE ARROYO EL CRISTO",estado:"CHIAPAS",municipio:"PICHUCALCO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:0},{clave:"PP-0002",proyecto:"DESPENSAS XOCHIMILCO",estado:"CDMX",municipio:"CDMX",razon_social:"GRUPO VENDOX COMERCIAL SA DE CV",monto:5850000,presupuesto:5850000,avance:53,ejercido_suministro:2111941.15},{clave:"PP-0003",proyecto:"DESPENSAS NAUCALPAN",estado:"CDMX",municipio:"CDMX",razon_social:"GRUPO VENDOX COMERCIAL SA DE CV",monto:0,presupuesto:23600000,avance:100,ejercido_suministro:13673085.7},{clave:"PP-0004",proyecto:"H AYUNTAMIENTO TEAPA",estado:"TABASCO",municipio:"TEAPA",razon_social:"",monto:0,presupuesto:0,avance:0,ejercido_suministro:107961.19},{clave:"PP-0005",proyecto:"ARRENDAMIENTO VEHICULAR TEAPA",estado:"TABASCO",municipio:"TEAPA",razon_social:"KUKULKAN ENERGY SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:397936.51},{clave:"PP-0006",proyecto:"ARRENDAMIENTO RETROEXCAVADORA COLIMA",estado:"COLIMA",municipio:"COLIMA",razon_social:"",monto:0,presupuesto:0,avance:0,ejercido_suministro:0},{clave:"PP-0007",proyecto:"ARRENDAMIENTO VEHICULAR PICHUCALCO",estado:"CHIAPAS",municipio:"PICHUCALCO",razon_social:"INGENIERIA Y Y LOGISTICA DIAGUI SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:28023},{clave:"PP-0008",proyecto:"ARRENDAMIENTO VEHICULAR JALAPA",estado:"TABASCO",municipio:"JALAPA",razon_social:"KUKULKAN ENERGY SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:24588},{clave:"PP-0009",proyecto:"CONGRESO DEL ESTADO DE TABASCO",estado:"TABASCO",municipio:"VILLAHERMOSA",razon_social:"MATERIALES GONIA SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:0},{clave:"PP-0010",proyecto:"FRESNILLO ZACATECAS",estado:"ZACATECAS",municipio:"FRESNILLO",razon_social:"KUKULKAN ENERGY SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:0},{clave:"PP-0011",proyecto:"PAPELERIA IEAT",estado:"TABASCO",municipio:"VILLAHERMOSA",razon_social:"",monto:0,presupuesto:0,avance:0,ejercido_suministro:4230.25},{clave:"PP-0012",proyecto:"REHABILITACION DE CAMINO RURAL (CERRO 2)",estado:"CHIAPAS",municipio:"PICHUCALCO",razon_social:"INGENIERIA MEXICANA GAMAN SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:0},{clave:"PP-0013",proyecto:"AYUNTAMIENTO PICHUCALCO",estado:"CHIAPAS",municipio:"PICHUCALCO",razon_social:"",monto:0,presupuesto:0,avance:0,ejercido_suministro:75033.11},{clave:"PP-0014",proyecto:"LEVANTAMIENTOS ZITACUARO",estado:"MICHOACAN",municipio:"ZITACUARO",razon_social:"",monto:0,presupuesto:0,avance:0,ejercido_suministro:0},{clave:"PP-0015",proyecto:"AMBULANCIA IXHUATLAN DEL SURESTE",estado:"VERACRUZ",municipio:"IXHUATLÁN DEL SURESTE",razon_social:"",monto:0,presupuesto:1307733.54,avance:0,ejercido_suministro:1307733.54},{clave:"PP-0016",proyecto:"PIPA, PASO DE OVEJA VER.",estado:"VERACRUZ",municipio:"PASO DE OVEJAS",razon_social:"ESTRATEGIAS MAX INNOVA",monto:1920000,presupuesto:1283000,avance:100,ejercido_suministro:1283000},{clave:"PP-0017",proyecto:"AMBULANCIA, CATEMACO VER.",estado:"VERACRUZ",municipio:"CATEMACO",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2327396.03,presupuesto:1340016.92,avance:100,ejercido_suministro:1275450.16},{clave:"PP-0018",proyecto:"COMPACTADOR, PASO DE OVEJAS VER.",estado:"VERACRUZ",municipio:"PASO DE OVEJAS",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2350000,presupuesto:1550000,avance:100,ejercido_suministro:1550000},{clave:"PP-0019",proyecto:"VOLTEO, PASO DE OVEJAS VER.",estado:"VERACRUZ",municipio:"PASO DE OVEJAS",razon_social:"ESTRATEGIAS MAX INNOVA",monto:1950000,presupuesto:1315000,avance:100,ejercido_suministro:1315000},{clave:"PP-0020",proyecto:"AMBULANCIA, CHINAMECA VER.",estado:"VERACRUZ",municipio:"CHINAMECA",razon_social:"ESTRATEGIAS MAX INNOVA",monto:1888094.39,presupuesto:1307734.16,avance:100,ejercido_suministro:1307733.54},{clave:"PP-0021",proyecto:"MODIFICADA AMBULANCIA, XICO",estado:"VERACRUZ",municipio:"XICO",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2960000,presupuesto:1916184.32,avance:100,ejercido_suministro:1307733.54},{clave:"PP-0022",proyecto:"RETROEXCAVADORA, XICO VER.",estado:"VERACRUZ",municipio:"XICO",razon_social:"ESTRATEGIAS MAX INNOVA",monto:3600000,presupuesto:1600000,avance:100,ejercido_suministro:1600000},{clave:"PP-0023",proyecto:"RODILLO, XICO VER.",estado:"VERACRUZ",municipio:"XICO",razon_social:"ESTRATEGIAS MAX INNOVA",monto:4502880,presupuesto:2294000,avance:100,ejercido_suministro:2294000},{clave:"PP-0024",proyecto:"CAMIÓN COMPACTADOR 21Y, XICO VER.",estado:"VERACRUZ",municipio:"XICO",razon_social:"ESTRATEGIAS MAX INNOVA",monto:0,presupuesto:0,avance:0,ejercido_suministro:3108500},{clave:"PP-0025",proyecto:"ALIMENTOS CENDIS XOCHIMILCO 2026",estado:"CDMX",municipio:"CDMX",razon_social:"COMERCIALIZADORA RIO LIBRE MX SA DE CV",monto:0,presupuesto:0,avance:0,ejercido_suministro:50732},{clave:"PP-0026",proyecto:"CAMIÓN COMPACTADOR SAYULA",estado:"VERACRUZ",municipio:"SAYULA",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000},{clave:"PP-0027",proyecto:"CAMIÓN COMPACTADOR TEXISTEPEC",estado:"VERACRUZ",municipio:"TEXISTEPEC",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000},{clave:"PP-0028",proyecto:"CAMIÓN COMPACTADOR IXHUATLÁN",estado:"VERACRUZ",municipio:"IXHUATLÁN DEL SURESTE",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000},{clave:"PP-0029",proyecto:"CAMIÓN COMPACTADOR COTAXTLA",estado:"VERACRUZ",municipio:"COTAXTLA",razon_social:"ESTRATEGIAS MAX INNOVA",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000},{clave:"PP-0030",proyecto:"14 YARDAS COMPACTADOR AYAHULULCO",estado:"VERACRUZ",municipio:"AYAHUALULCO",razon_social:"",monto:2380000,presupuesto:1438000,avance:100,ejercido_suministro:1438000},{clave:"PP-0031",proyecto:"14 YARDAS COMPACTADOR RAFAEL LUCIO",estado:"VERACRUZ",municipio:"RAFAEL LUCIO",razon_social:"",monto:2380000,presupuesto:1438000,avance:100,ejercido_suministro:1156000},{clave:"PP-0032",proyecto:"14 YARDAS COMPACTADOR ACAJETE",estado:"VERACRUZ",municipio:"CAJEME",razon_social:"",monto:2380000,presupuesto:1438000,avance:100,ejercido_suministro:1438000},{clave:"PP-0033",proyecto:"14 YARDAS COMPACTADOR YECAUTLA",estado:"VERACRUZ",municipio:"YECAUTLA",razon_social:"",monto:2380000,presupuesto:1438000,avance:100,ejercido_suministro:1438000},{clave:"PP-0034",proyecto:"21 YARDAS COMPACTADOR BANDERILLA",estado:"VERACRUZ",municipio:"BANDERILLA",razon_social:"",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000},{clave:"PP-0035",proyecto:"21 YARDAS COMPACTADOR IXHUATLAN DEL CAFE",estado:"VERACRUZ",municipio:"IXHUATLAN DEL CAFE",razon_social:"",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000},{clave:"PP-0036",proyecto:"21 YARDAS COMPACTADOR COSAUTLAN",estado:"VERACRUZ",municipio:"COSAULTLAN",razon_social:"",monto:2580000,presupuesto:1720000,avance:100,ejercido_suministro:1720000}];
 
+/* ═══ UTILS ═══ */
 const fm=n=>!n?'—':'$'+n.toLocaleString('es-MX',{maximumFractionDigits:0});
 const fmM=n=>{if(!n)return'—';const m=n/1e6;return m>=1?'$'+m.toFixed(1)+'M':'$'+n.toLocaleString('es-MX',{maximumFractionDigits:0});};
 const ac=v=>v>100?'#8b7ae8':v>=75?'#4ab87e':v>=25?'#e8c845':'#e05c5c';
+const grp=(arr,key)=>arr.reduce((m,r)=>{(m[r[key]]=m[r[key]]||[]).push(r);return m},{});
 
-let ofilt='t',pfilt='t';
-
-// KPIs
-function kpis(){
+/* ═══ KPIS ═══ */
+function initKPIs(){
   const pob=OBRAS.reduce((a,r)=>a+r.presupuesto,0),eob=OBRAS.reduce((a,r)=>a+r.ejercido,0);
   const ppv=PROV.reduce((a,r)=>a+r.presupuesto,0),epv=PROV.reduce((a,r)=>a+r.ejercido_suministro,0);
-  document.getElementById('kpi-tot').textContent=OBRAS.length+PROV.length;
-  document.getElementById('kpi-ob').textContent=OBRAS.length;
-  document.getElementById('ks-ob').textContent='Pres.: '+fmM(pob);
-  document.getElementById('kpi-pv').textContent=PROV.length;
-  document.getElementById('ks-pv').textContent='Pres.: '+fmM(ppv);
-  document.getElementById('kpi-pob').textContent=fmM(pob);
-  document.getElementById('ks-pob').textContent='Ejercido: '+fmM(eob);
-  document.getElementById('kpi-ppv').textContent=fmM(ppv);
-  document.getElementById('ks-ppv').textContent='Ejercido: '+fmM(epv);
-  document.getElementById('ob-ej').textContent=fmM(eob);
-  document.getElementById('pv-ej').textContent=fmM(epv);
+  document.getElementById('k-pob').textContent=fmM(pob);
+  document.getElementById('k-pob-s').textContent='Ejercido: '+fmM(eob);
+  document.getElementById('k-ppv').textContent=fmM(ppv);
+  document.getElementById('k-ppv-s').textContent='Ejercido: '+fmM(epv);
 }
 
-function rO(d){
-  const l=document.getElementById('ob-list');l.innerHTML='';
-  d.forEach(r=>{
-    const af=r.avance_financiero,over=af>100;
-    const row=document.createElement('div');row.className='p-row';
-    row.innerHTML=`<div class="c-id">${r.clave}</div><div class="c-name">${r.proyecto}<div class="s">${r.municipio}, ${r.estado}</div></div><div class="c-amt">${fm(r.monto)}</div><div class="c-av"><div class="av-n" style="color:${ac(af)}">${af}%</div><div class="pb"><div class="pf${over?' over':''}" style="width:${Math.min(af,100)}%"></div></div></div><div class="c-st">${r.tipo_ejecucion.substring(0,5)}.</div>`;
-    row.onclick=()=>omO(r);l.appendChild(row);
-  });
-  document.getElementById('ob-lbl').textContent=d.length+' proyectos vigentes';
-  document.getElementById('ob-cnt').textContent=d.length+' de '+OBRAS.length;
-}
-function rP(d){
-  const l=document.getElementById('pv-list');l.innerHTML='';
-  d.forEach(r=>{
-    const av=r.avance;
-    const row=document.createElement('div');row.className='p-row';
-    row.innerHTML=`<div class="c-id">${r.clave}</div><div class="c-name">${r.proyecto}<div class="s">${r.municipio}, ${r.estado}</div></div><div class="c-amt">${fm(r.presupuesto)}</div><div class="c-av"><div class="av-n" style="color:${ac(av)}">${av>0?av+'%':'—'}</div><div class="pb"><div class="pf" style="width:${Math.min(av,100)}%"></div></div></div><div class="c-st">${r.razon_social?r.razon_social.split(' ')[0]:'—'}</div>`;
-    row.onclick=()=>omP(r);l.appendChild(row);
-  });
-  document.getElementById('pv-lbl').textContent=d.length+' suministros vigentes';
-  document.getElementById('pv-cnt').textContent=d.length+' de '+PROV.length;
+/* ═══ TABS ═══ */
+function showTab(t){
+  document.querySelectorAll('.tab').forEach(el=>el.className='tab');
+  document.querySelectorAll('.section').forEach(el=>el.classList.remove('active'));
+  if(t==='obras'){document.querySelector('.tab').classList.add('active-obra');document.getElementById('sec-obras').classList.add('active');}
+  else if(t==='prov'){document.getElementById('tab-prov').classList.add('active-prov');document.getElementById('sec-prov').classList.add('active');}
+  else{document.getElementById('tab-map').classList.add('active-map');document.getElementById('sec-mapa').classList.add('active');}
 }
 
-function gfO(){
-  const q=document.getElementById('srch-ob').value.toLowerCase();
-  return OBRAS.filter(r=>{
-    const mq=!q||[r.proyecto,r.municipio,r.estado,r.razon_social,r.clave].some(x=>x.toLowerCase().includes(q));
-    const af=r.avance_financiero;
-    const mf=ofilt==='t'||(ofilt==='a'&&af>=75)||(ofilt==='m'&&af>=25&&af<75)||(ofilt==='b'&&af<25);
-    return mq&&mf;
-  });
+/* ═══ SELECTS ═══ */
+function initSelects(){
+  const obStates=[...new Set(OBRAS.map(r=>r.estado))].sort();
+  const pvStates=[...new Set(PROV.map(r=>r.estado))].sort();
+  const sel1=document.getElementById('sel-ob'),sel2=document.getElementById('sel-pv');
+  obStates.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sel1.appendChild(o);});
+  pvStates.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sel2.appendChild(o);});
 }
-function gfP(){
-  const q=document.getElementById('srch-pv').value.toLowerCase();
-  return PROV.filter(r=>{
-    const mq=!q||[r.proyecto,r.municipio,r.estado,r.razon_social,r.clave].some(x=>x.toLowerCase().includes(q));
-    const av=r.avance;
-    const mf=pfilt==='t'||(pfilt==='c'&&av>=100)||(pfilt==='e'&&av>0&&av<100)||(pfilt==='s'&&av===0);
-    return mq&&mf;
-  });
-}
-function fO(){rO(gfO());}function fP(){rP(gfP());}
-function sfO(f,el){ofilt=f;document.querySelectorAll('.po .ftag').forEach(t=>t.classList.remove('ao'));el.classList.add('ao');fO();}
-function sfP(f,el){pfilt=f;document.querySelectorAll('.pp .ftag').forEach(t=>t.classList.remove('ap'));el.classList.add('ap');fP();}
 
-// Modals
+/* ═══ RENDER GROUPS ═══ */
+function makeRow(r,tipo){
+  const av=tipo==='obra'?r.avance_financiero:r.avance;
+  const over=av>100;
+  const div=document.createElement('div');
+  div.className=`p-row ${tipo==='obra'?'ro':'rp'}`;
+  div.innerHTML=`<div class="c-id">${r.clave}</div><div class="c-name">${r.proyecto}<div class="s">${r.razon_social||'—'}</div></div><div class="c-amt">${fm(tipo==='obra'?r.monto:r.presupuesto)}</div><div class="c-av"><div class="av-n" style="color:${ac(av)}">${av>0?av+'%':'—'}</div><div class="pb"><div class="pf${over?' over':''}" style="width:${Math.min(av,100)}%"></div></div></div><div class="c-tp">${r.tipo_ejecucion?r.tipo_ejecucion.substring(0,5)+'.':''}</div>`;
+  div.onclick=()=>tipo==='obra'?omO(r):omP(r);
+  return div;
+}
+
+function renderGroups(containerId,data,tipo){
+  const q=document.getElementById(tipo==='obra'?'srch-ob':'srch-pv').value.toLowerCase();
+  const stateFilter=document.getElementById(tipo==='obra'?'sel-ob':'sel-pv').value;
+  const filtered=data.filter(r=>{
+    const mq=!q||[r.proyecto,r.municipio,r.estado,r.razon_social||'',r.clave].some(x=>x.toLowerCase().includes(q));
+    const ms=!stateFilter||r.estado===stateFilter;
+    return mq&&ms;
+  });
+  const byState=grp(filtered,'estado');
+  const cont=document.getElementById(containerId);
+  cont.innerHTML='';
+  if(!filtered.length){cont.innerHTML='<div style="padding:30px;text-align:center;color:var(--txt2);font-size:13px;">Sin resultados</div>';return;}
+
+  Object.keys(byState).sort().forEach((estado,si)=>{
+    const stProjects=byState[estado];
+    const byMun=grp(stProjects,'municipio');
+    const totalPres=stProjects.reduce((a,r)=>a+(tipo==='obra'?r.presupuesto:r.presupuesto),0);
+    const totalEj=stProjects.reduce((a,r)=>a+(tipo==='obra'?r.ejercido:r.ejercido_suministro),0);
+
+    const sg=document.createElement('div');sg.className='state-group';sg.style.animationDelay=(si*0.05)+'s';
+    sg.innerHTML=`
+      <div class="sg-head" onclick="toggleSG(this)">
+        <div class="sg-head-l">
+          <span class="sg-chevron open">▶</span>
+          <span class="sg-estado">${estado}</span>
+          <span class="sg-badge ${tipo==='obra'?'o':'p'}">${stProjects.length} proy.</span>
+          <span class="sg-badge ${tipo==='obra'?'o':'p'}">${Object.keys(byMun).length} mun.</span>
+        </div>
+        <div class="sg-stats">
+          <div class="sg-stat"><div class="sg-stat-lbl">Presupuesto</div><div class="sg-stat-val ${tipo==='obra'?'o':'p'}">${fmM(totalPres)}</div></div>
+          <div class="sg-stat"><div class="sg-stat-lbl">Ejercido</div><div class="sg-stat-val ${tipo==='obra'?'o':'p'}">${fmM(totalEj)}</div></div>
+        </div>
+      </div>
+      <div class="sg-body open" id="sgb-${tipo}-${si}"></div>`;
+    cont.appendChild(sg);
+
+    const body=sg.querySelector('.sg-body');
+    // Table header
+    const th=document.createElement('div');th.className='t-head';
+    th.innerHTML='<div>CLAVE</div><div>PROYECTO</div><div style="text-align:right">MONTO</div><div style="text-align:right">AVANCE</div><div style="text-align:right">TIPO</div>';
+    body.appendChild(th);
+
+    Object.keys(byMun).sort().forEach((mun,mi)=>{
+      const munProjects=byMun[mun];
+      const mg=document.createElement('div');mg.className='mun-group';
+      mg.innerHTML=`<div class="mg-head" onclick="toggleMG(this)"><span class="mg-chevron open">▶</span><span class="mg-name">📍 ${mun}</span><span class="mg-count">${munProjects.length} proyecto${munProjects.length>1?'s':''}</span></div><div class="mg-body open" id="mgb-${tipo}-${si}-${mi}"></div>`;
+      body.appendChild(mg);
+      const mb=mg.querySelector('.mg-body');
+      munProjects.forEach(r=>mb.appendChild(makeRow(r,tipo)));
+    });
+  });
+}
+
+function renderObras(){renderGroups('ob-groups',OBRAS,'obra');}
+function renderProv(){renderGroups('pv-groups',PROV,'prov');}
+
+function toggleSG(head){
+  const body=head.nextElementSibling;
+  const ch=head.querySelector('.sg-chevron');
+  body.classList.toggle('open');
+  ch.classList.toggle('open');
+}
+function toggleMG(head){
+  const body=head.nextElementSibling;
+  const ch=head.querySelector('.mg-chevron');
+  body.classList.toggle('open');
+  ch.classList.toggle('open');
+}
+
+/* ═══ MAP ═══ */
+function initMap(){
+  const obStates=new Set(OBRAS.map(r=>r.estado));
+  const pvStates=new Set(PROV.map(r=>r.estado));
+  document.querySelectorAll('.state-path').forEach(path=>{
+    const s=path.dataset.state;
+    const hasO=obStates.has(s),hasP=pvStates.has(s);
+    if(hasO&&hasP)path.classList.add('has-both');
+    else if(hasO)path.classList.add('has-obra');
+    else if(hasP)path.classList.add('has-prov');
+    path.addEventListener('mouseenter',e=>showTooltip(e,s,hasO,hasP));
+    path.addEventListener('mouseleave',()=>document.getElementById('map-tooltip').classList.remove('show'));
+    path.addEventListener('click',()=>selectState(s));
+  });
+  buildMapSide();
+}
+
+function showTooltip(e,estado,hasO,hasP){
+  const tt=document.getElementById('map-tooltip');
+  const obCount=OBRAS.filter(r=>r.estado===estado).length;
+  const pvCount=PROV.filter(r=>r.estado===estado).length;
+  if(!hasO&&!hasP){tt.classList.remove('show');return;}
+  tt.innerHTML=`<strong style="font-size:12px">${estado}</strong><br><span style="color:var(--obra)">🏗 Obra: ${obCount} proyectos</span><br><span style="color:var(--prov)">📦 Prov: ${pvCount} proyectos</span>`;
+  const rect=e.target.closest('svg').parentElement.getBoundingClientRect();
+  tt.style.left=(e.clientX-rect.left+10)+'px';
+  tt.style.top=(e.clientY-rect.top-20)+'px';
+  tt.classList.add('show');
+}
+
+function selectState(estado){
+  document.querySelectorAll('.state-path').forEach(p=>p.classList.remove('active-s'));
+  const path=document.querySelector(`[data-state="${estado}"]`);
+  if(path)path.classList.add('active-s');
+  document.querySelectorAll('.map-state-card').forEach(c=>{
+    c.classList.toggle('sel',c.dataset.state===estado);
+  });
+  const card=document.querySelector(`.map-state-card[data-state="${estado}"]`);
+  if(card)card.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function buildMapSide(){
+  const allStates=[...new Set([...OBRAS.map(r=>r.estado),...PROV.map(r=>r.estado)])].sort();
+  const side=document.getElementById('map-side');
+  allStates.forEach(estado=>{
+    const obList=OBRAS.filter(r=>r.estado===estado);
+    const pvList=PROV.filter(r=>r.estado===estado);
+    const obPres=obList.reduce((a,r)=>a+r.presupuesto,0);
+    const pvPres=pvList.reduce((a,r)=>a+r.presupuesto,0);
+    const card=document.createElement('div');
+    card.className='map-state-card';card.dataset.state=estado;
+    card.innerHTML=`
+      <div class="msc-head">
+        <div class="msc-name">${estado}</div>
+        <div class="msc-badges">
+          ${obList.length?`<div class="msc-badge o">🏗 ${obList.length}</div>`:''}
+          ${pvList.length?`<div class="msc-badge p">📦 ${pvList.length}</div>`:''}
+        </div>
+      </div>
+      <div class="msc-stats">
+        ${obList.length?`<div class="msc-stat"><div class="msc-stat-lbl">Presup. Obra</div><div class="msc-stat-val o">${fmM(obPres)}</div></div>`:''}
+        ${pvList.length?`<div class="msc-stat"><div class="msc-stat-lbl">Presup. Prov.</div><div class="msc-stat-val p">${fmM(pvPres)}</div></div>`:''}
+      </div>`;
+    card.onclick=()=>selectState(estado);
+    side.appendChild(card);
+  });
+}
+
+/* ═══ MODALS ═══ */
 function omO(r){
   document.getElementById('mt').textContent=r.proyecto;
-  document.getElementById('mc').textContent=r.clave+' · '+r.estado+', '+r.municipio+' · '+r.tipo_ejecucion;
-  document.getElementById('mb').innerHTML=`<div class="d-grid"><div class="d-item"><label>Razón Social</label><value>${r.razon_social||'—'}</value></div><div class="d-item"><label>No. Contrato</label><value style="font-size:14px">${r.num_contrato||'—'}</value></div><div class="d-item"><label>Inicio</label><value>${r.inicio}</value></div><div class="d-item"><label>Término</label><value>${r.termino}</value></div><div class="d-item"><label>Avance Físico</label><value style="color:${ac(r.avance_fisico)}">${r.avance_fisico}%</value></div><div class="d-item"><label>Avance Financiero</label><value style="color:${ac(r.avance_financiero)}">${r.avance_financiero}%</value></div></div><div class="d-sec">Desglose Financiero</div><div class="b-row"><span class="bl">Monto Contrato</span><span class="bv">${fm(r.monto)}</span></div><div class="b-row"><span class="bl">Presupuesto Autorizado</span><span class="bv">${fm(r.presupuesto)}</span></div><div class="b-row"><span class="bl">Total Ejercido</span><span class="bv">${fm(r.ejercido)}</span></div><div class="b-row"><span class="bl">Saldo Disponible</span><span class="bv ${r.disponible<0?'neg':'pos'}">${fm(r.disponible)}</span></div>`;
+  document.getElementById('mc').textContent=r.clave+' · '+r.estado+' — '+r.municipio+' · '+r.tipo_ejecucion;
+  document.getElementById('mb').innerHTML=`<div class="d-grid"><div class="d-item"><label>Razón Social</label><value>${r.razon_social||'—'}</value></div><div class="d-item"><label>No. Contrato</label><value style="font-size:10px">${r.num_contrato||'—'}</value></div><div class="d-item"><label>Inicio</label><value>${r.inicio}</value></div><div class="d-item"><label>Término</label><value>${r.termino}</value></div><div class="d-item"><label>Avance Físico</label><value style="color:${ac(r.avance_fisico)}">${r.avance_fisico}%</value></div><div class="d-item"><label>Avance Financiero</label><value style="color:${ac(r.avance_financiero)}">${r.avance_financiero}%</value></div></div><div class="d-sec">Desglose Financiero</div><div class="b-row"><span class="bl">Monto Contrato</span><span class="bv">${fm(r.monto)}</span></div><div class="b-row"><span class="bl">Presupuesto Autorizado</span><span class="bv">${fm(r.presupuesto)}</span></div><div class="b-row"><span class="bl">Total Ejercido</span><span class="bv">${fm(r.ejercido)}</span></div><div class="b-row"><span class="bl">Saldo Disponible</span><span class="bv ${r.disponible<0?'neg':'pos'}">${fm(r.disponible)}</span></div>`;
   document.getElementById('mov').classList.add('open');
 }
 function omP(r){
   document.getElementById('mt').textContent=r.proyecto;
-  document.getElementById('mc').textContent=r.clave+' · '+r.estado+', '+r.municipio;
-  document.getElementById('mb').innerHTML=`<div class="d-grid"><div class="d-item"><label>Proveedor</label><value>${r.razon_social||'—'}</value></div><div class="d-item"><label>Estado</label><value>${r.estado}</value></div><div class="d-item"><label>Avance Ejecutado</label><value style="color:${ac(r.avance)}">${r.avance>0?r.avance+'%':'Sin registro'}</value></div><div class="d-item"><label>Ejercido Suministro</label><value>${fm(r.ejercido_suministro)}</value></div></div><div class="d-sec">Desglose Financiero</div><div class="b-row"><span class="bl">Monto Contrato</span><span class="bv">${fm(r.monto)}</span></div><div class="b-row"><span class="bl">Presupuesto</span><span class="bv">${fm(r.presupuesto)}</span></div><div class="b-row"><span class="bl">Ejercido en Suministro</span><span class="bv">${fm(r.ejercido_suministro)}</span></div>`;
+  document.getElementById('mc').textContent=r.clave+' · '+r.estado+' — '+r.municipio;
+  document.getElementById('mb').innerHTML=`<div class="d-grid"><div class="d-item"><label>Proveedor</label><value>${r.razon_social||'—'}</value></div><div class="d-item"><label>Estado</label><value>${r.estado}</value></div><div class="d-item"><label>Municipio</label><value>${r.municipio}</value></div><div class="d-item"><label>Avance</label><value style="color:${ac(r.avance)}">${r.avance>0?r.avance+'%':'Sin registro'}</value></div></div><div class="d-sec">Desglose Financiero</div><div class="b-row"><span class="bl">Monto Contrato</span><span class="bv">${fm(r.monto)}</span></div><div class="b-row"><span class="bl">Presupuesto</span><span class="bv">${fm(r.presupuesto)}</span></div><div class="b-row"><span class="bl">Ejercido Suministro</span><span class="bv">${fm(r.ejercido_suministro)}</span></div>`;
   document.getElementById('mov').classList.add('open');
 }
 function cm(e){if(!e||e.target===document.getElementById('mov'))document.getElementById('mov').classList.remove('open');}
 
-// State chart
-function stateChart(){
-  const m={};
-  OBRAS.forEach(r=>{if(!m[r.estado])m[r.estado]={o:0,p:0};m[r.estado].o++;});
-  PROV.forEach(r=>{if(!m[r.estado])m[r.estado]={o:0,p:0};m[r.estado].p++;});
-  const sorted=Object.entries(m).sort((a,b)=>(b[1].o+b[1].p)-(a[1].o+a[1].p)).slice(0,8);
-  const mx=Math.max(...sorted.map(([,v])=>v.o+v.p));
-  document.getElementById('s-list').innerHTML=sorted.map(([e,v])=>`<div class="s-row"><div class="s-name">${e}</div><div class="s-bars"><div class="s-bw" style="height:4px"><div class="s-bf-o" style="width:${v.o/mx*100}%"></div></div><div class="s-bw" style="height:4px"><div class="s-bf-p" style="width:${v.p/mx*100}%"></div></div></div><div class="s-cnt">O:${v.o} P:${v.p}</div></div>`).join('');
-}
-
-// Avance distribution
-function avDist(){
-  const bk=data=>({s:data.filter(v=>v<=0).length,b:data.filter(v=>v>0&&v<25).length,m:data.filter(v=>v>=25&&v<75).length,a:data.filter(v=>v>=75&&v<100).length,c:data.filter(v=>v>=100).length});
-  const ob=bk(OBRAS.map(r=>r.avance_financiero)),pv=bk(PROV.map(r=>r.avance));
-  const cs=[['s','#3d4356'],['b','#e05c5c'],['m','#e8c845'],['a','#4ab87e'],['c','#8b7ae8']];
-  const seg=(id,b,tot)=>document.getElementById(id).innerHTML=cs.map(([k,c])=>b[k]?`<div class="seg" style="flex:${b[k]};background:${c}" title="${k}:${b[k]}"></div>`:'').join('');
-  seg('seg-ob',ob,OBRAS.length);seg('seg-pv',pv,PROV.length);
-  const leg=(id,b)=>document.getElementById(id).innerHTML=`<div class="al"><div class="ad" style="background:#3d4356"></div>Sin:${b.s}</div><div class="al"><div class="ad" style="background:#e05c5c"></div>&lt;25%:${b.b}</div><div class="al"><div class="ad" style="background:#e8c845"></div>25-74%:${b.m}</div><div class="al"><div class="ad" style="background:#4ab87e"></div>75-99%:${b.a}</div><div class="al"><div class="ad" style="background:#8b7ae8"></div>≥100%:${b.c}</div>`;
-  leg('leg-ob',ob);leg('leg-pv',pv);
-  const tot100O=OBRAS.filter(r=>r.avance_financiero>=100).length;
-  const tot100P=PROV.filter(r=>r.avance>=100).length;
-  const avO=OBRAS.length?Math.round(OBRAS.reduce((a,r)=>a+r.avance_financiero,0)/OBRAS.length):0;
-  const avP=PROV.length?Math.round(PROV.filter(r=>r.avance>0).reduce((a,r)=>a+r.avance,0)/PROV.filter(r=>r.avance>0).length):0;
-  document.getElementById('av-stats').innerHTML=`<div class="av-s"><div class="av-sv" style="color:var(--obra)">${avO}%</div><div class="av-sl">Prom. Obra</div></div><div class="av-s"><div class="av-sv" style="color:var(--prov)">${avP}%</div><div class="av-sl">Prom. Prov.</div></div><div class="av-s"><div class="av-sv" style="color:var(--green)">${tot100O}</div><div class="av-sl">Obras ≥100%</div></div><div class="av-s"><div class="av-sv" style="color:var(--green)">${tot100P}</div><div class="av-sl">Prov. ≥100%</div></div>`;
-}
-
-// Init
+/* ═══ INIT ═══ */
 document.getElementById('live-date').textContent=new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).toUpperCase();
-kpis();rO(OBRAS);rP(PROV);stateChart();avDist();
+initKPIs();initSelects();renderObras();renderProv();initMap();
 </script>
 </body>
 </html>
